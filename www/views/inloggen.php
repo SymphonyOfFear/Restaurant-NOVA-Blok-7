@@ -1,12 +1,18 @@
 <?php include '../partials/header.php'; ?>
 
-<main class="main-content">
-    <h1>Inloggen</h1>
-    <form action="../controllers/process-login.php" method="post">
-        <label for="email">E-mail:</label>
-        <input type="password" name="password" placeholder="Wachtwoord" required>
-        <button type="submit">Inloggen</button>
+<div class="form-container">
+    <h2>Login</h2>
+    <form action="../controllers/process-inloggen.php" method="post">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
     </form>
-</main>
+</div>
 
 <?php include '../partials/footer.php'; ?>
