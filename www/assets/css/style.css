@@ -1,0 +1,176 @@
+:root {
+    --primary-color: #c8102e;
+    /* Kenyan flag red for primary actions */
+    --accent-color: #006341;
+    /* Kenyan flag green for accents */
+    --background-color: #ffffff;
+    /* White background for a clean look */
+    --text-color: #333;
+    /* Dark grey for text for readability */
+    --navbar-background: #fff;
+    /* White background for navbar for a clean look */
+    --footer-background: #f2f2f2;
+    /* Light grey for footer */
+    --form-background-color: #ffffff;
+    /* White background for forms */
+    --button-background-color: #c8102e;
+    /* Kenyan flag red for buttons */
+    --button-hover-color: #9e1b25;
+    /* Darker red for button hover state */
+    --link-color: #006341;
+    /* Kenyan flag green for links */
+    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Font stack */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-stack);
+}
+
+header,
+nav,
+footer {
+    background-color: var(--navbar-background);
+    color: white;
+}
+
+header {
+    padding: 1em 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    padding: 0 1em;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+nav ul li a:hover,
+nav ul li a:focus {
+    color: var(--primary-color);
+}
+
+.banner {
+    background: url('path_to_banner_image.jpg') no-repeat center center;
+    background-size: cover;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner h1 {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Slight overlay for readability */
+    padding: 0.5em 1em;
+}
+
+main {
+    padding: 1em;
+}
+
+footer {
+    background-color: var(--footer-background);
+    padding: 1em 0;
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    display: inline;
+    padding: 0 1em;
+}
+
+footer ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.form-container {
+    background-color: var(--background-color);
+    border: 1px solid #ddd;
+    padding: 1em 2em;
+    margin: 2em auto;
+    width: 300px;
+}
+
+.form-container h2 {
+    color: var(--text-color);
+    margin-bottom: 0.5em;
+}
+
+.form-container input[type='text'],
+.form-container input[type='email'],
+.form-container input[type='password'],
+.form-container input[type='date'],
+.form-container input[type='time'],
+.form-container input[type='number'],
+.form-container select,
+.form-container textarea {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 0.5em;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-container button:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Additional styles can be added here based on each page's requirement */
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        padding: 0.5em 0;
+    }
+
+    .form-container {
+        width: auto;
+        padding: 1em;
+    }
+}
+
+
+.logo svg {
+    height: 50px;
+    width: auto;
+}
