@@ -1,23 +1,25 @@
-// Dropdown Functie
+// When the document is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Select all dropdown buttons
+    document.querySelectorAll('.dropbtn').forEach(function(dropbtn) {
+        // Add click event listener to each button
+        dropbtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            let dropdownContent = this.nextElementSibling;
 
-const toggleDropdown = (dropdownId) => {
-    const dropdown = document.getElementById(dropdownId);
-    if (dropdown) {
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    } else {
-        console.error('Dropdown with ID "' + dropdownId + '" not found.');
-    }
-};
-
-// Dropdown sluiten op outside box klik
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
+            // If the next element is the dropdown content, toggle the 'show' class
+            if (dropdownContent && dropdownContent.classList.contains('dropdown-content')) {
+                dropdownContent.classList.toggle('show');
             }
+        });
+    });
+
+    // Close the dropdown by clicking outside of it
+    window.addEventListener('click', function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            document.querySelectorAll('.dropdown-content.show').forEach(function(dropdown) {
+                dropdown.classList.remove('show');
+            });
         }
-    }
-};
+    });
+});

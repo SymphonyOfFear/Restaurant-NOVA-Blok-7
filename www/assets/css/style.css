@@ -1,108 +1,105 @@
 :root {
-    --primary-color: #c8102e;
-    /* Kenyan flag red for primary actions */
-    --accent-color: #006341;
-    /* Kenyan flag green for accents */
-    --background-color: #ffffff;
-    /* White background for a clean look */
-    --text-color: #333;
-    /* Dark grey for text for readability */
-    --navbar-background: #fff;
-    /* White background for navbar for a clean look */
-    --footer-background: #f2f2f2;
-    /* Light grey for footer */
-    --form-background-color: #ffffff;
-    /* White background for forms */
-    --button-background-color: #c8102e;
-    /* Kenyan flag red for buttons */
-    --button-hover-color: #9e1b25;
-    /* Darker red for button hover state */
-    --link-color: #006341;
-    /* Kenyan flag green for links */
-    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Font stack */
+    --primary-color: #006600; /* Kenyan green */
+    --secondary-color: #BB0000; /* Kenyan red */
+    --accent-color: #FFCD00; /* Kenyan gold */
+    --background-color: #FFFFFF; /* White */
+    --navbar-background: #000000; /* Black */
+    --footer-background: #000000; /* Black */
+    --text-color: #333333; /* Dark grey */
+    --link-color: #006600; /* Green */
+    --logo-background: #F2E8CF; /* Off-white/beige */
+    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font stack */
+    --border-radius: 4px; /* For rounded corners */
 }
 
-body {
+* {
     margin: 0;
     padding: 0;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    box-sizing: border-box;
     font-family: var(--font-stack);
 }
 
-header,
-nav,
-footer {
-    background-color: var(--navbar-background);
-    color: white;
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+/* Header styles */
 header {
+    background-color: var(--logo-background);
+    color: white;
     padding: 1em 0;
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+header .logo {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-nav ul li {
+header .logo img {
+    height: 80px;
+}
+
+/* Navigation styles */
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+nav li {
     padding: 0 1em;
 }
 
-nav ul li a {
+nav a {
     color: white;
     text-decoration: none;
-    transition: color 0.2s ease-in-out;
-}
-
-nav ul li a:hover,
-nav ul li a:focus {
-    color: var(--primary-color);
-}
-
-.banner {
-    background: url('path_to_banner_image.jpg') no-repeat center center;
-    background-size: cover;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.banner h1 {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Slight overlay for readability */
     padding: 0.5em 1em;
+    display: block;
 }
 
+nav a:hover {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+/* Main content styles */
 main {
+    flex: 1 0 auto;
     padding: 1em;
-}
-
-footer {
-    background-color: var(--footer-background);
-    padding: 1em 0;
     text-align: center;
 }
 
+/* Footer styles */
+footer {
+    background-color: var(--footer-background);
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    margin-top: auto; /* Push footer to bottom */
+}
+
 footer p {
-    margin: 0;
+    margin-bottom: 0;
 }
 
 footer ul {
     list-style: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
 footer ul li {
-    display: inline;
-    padding: 0 1em;
+    margin: 0 10px;
 }
 
 footer ul li a {
@@ -110,67 +107,194 @@ footer ul li a {
     text-decoration: none;
 }
 
+/* Form styles */
 .form-container {
-    background-color: var(--background-color);
-    border: 1px solid #ddd;
-    padding: 1em 2em;
+    background: var(--background-color);
     margin: 2em auto;
-    width: 300px;
+    padding: 2em;
+    max-width: 400px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-container h2 {
-    color: var(--text-color);
-    margin-bottom: 0.5em;
+    margin-bottom: 1em;
+    color: var(--primary-color);
 }
 
-.form-container input[type='text'],
-.form-container input[type='email'],
-.form-container input[type='password'],
-.form-container input[type='date'],
-.form-container input[type='time'],
-.form-container input[type='number'],
+.form-container label {
+    display: block;
+    text-align: left;
+    margin-top: 0.5em;
+}
+
+.form-container input,
 .form-container select,
-.form-container textarea {
+.form-container textarea,
+.form-container button {
     width: 100%;
-    padding: 0.5em;
-    margin-bottom: 1em;
+    padding: 10px;
+    margin-top: 5px;
     border: 1px solid #ccc;
+    border-radius: var(--border-radius);
 }
 
 .form-container button {
-    width: 100%;
-    padding: 0.5em;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: white;
+    margin-top: 15px;
+    padding: 10px 20px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.2s;
 }
 
 .form-container button:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
 
-/* Additional styles can be added here based on each page's requirement */
+/* Button styles */
+.btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.75em 1.5em;
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease;
+}
 
-/* Responsive styles */
+.btn:hover,
+.btn:focus {
+background-color: var(--secondary-color);
+color: var(--background-color);
+}
+
+/* Banner styles */
+.banner {
+    background: url('../images/banner.png') no-repeat center center;
+    background-size: contain; /* change this to 'cover' if you want the banner to cover the entire space without respecting its aspect ratio */
+    height: 500px; /* Adjust to your preference */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner h1 {
+color: white;
+font-size: 2.5em;
+}
+
+/* Dropdown styles */
+.dropdown {
+position: relative;
+display: inline-block;
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.dropdown-content a {
+color: var(--text-color);
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+.dropdown-content a:hover {
+background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+display: block;
+}
+
+/* Media queries for responsive layout */
 @media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-    }
-
-    nav ul li {
-        padding: 0.5em 0;
-    }
-
-    .form-container {
-        width: auto;
-        padding: 1em;
-    }
+header,
+footer {
+padding: 0.5em;
+}
+nav ul {
+    flex-direction: column;
 }
 
-
-.logo svg {
-    height: 50px;
-    width: auto;
+nav ul li {
+    margin-bottom: 0.5em;
 }
+
+.form-container,
+.dashboard-container,
+.sidebar {
+    padding: 1em;
+    width: 100%;
+}
+}
+
+/* Product and menu item styles */
+.menu-item {
+border: 1px solid #ddd;
+margin: 1em;
+padding: 1em;
+border-radius: var(--border-radius);
+}
+
+.menu-item img {
+max-width: 100%;
+height: auto;
+border-radius: var(--border-radius);
+margin-bottom: 1em;
+}
+
+.menu-item h3 {
+color: var(--secondary-color);
+margin-bottom: 0.5em;
+}
+
+.menu-item p {
+margin-bottom: 1em;
+line-height: 1.4;
+}
+
+/* Dashboard styles */
+.dashboard-container {
+display: flex;
+min-height: 100vh;
+}
+
+.sidebar {
+width: 250px;
+background-color: #003865; /* Dark blue from the Kenyan flag */
+color: white;
+padding: 20px;
+}
+
+.sidebar ul {
+list-style: none;
+padding: 0;
+}
+
+.sidebar ul li a {
+color: white;
+text-decoration: none;
+display: block;
+padding: 10px 0;
+}
+
+.sidebar ul li a:hover {
+background-color: #c8102e; /* Red from the Kenyan flag */
+padding-left: 10px;
+}
+
+.dashboard-main {
+flex-grow: 1;
+padding: 20px;
+background-color: #fff; /* Light background for the main content */
+}    

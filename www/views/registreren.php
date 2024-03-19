@@ -1,4 +1,4 @@
-<?php include 'partials/header.php'; ?>
+<?php include '../partials/header.php'; ?>
 
 <main class="main-content register-page">
     <div class="container">
@@ -21,4 +21,4 @@
     </div>
 </main>
 
-<?php include 'partials/footer.php'; ?>
+<?php include '../partials/footer.php'; ?>

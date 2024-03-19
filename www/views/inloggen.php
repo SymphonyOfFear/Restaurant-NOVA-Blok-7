@@ -1,4 +1,4 @@
-<?php include 'partials/header.php'; ?>
+<?php include '../partials/header.php'; ?>
 
 <main class="main-content">
     <h1>Inloggen</h1>
@@ -9,4 +9,4 @@
     </form>
 </main>
 
-<?php include 'partials/footer.php'; ?>
+<?php include '../partials/footer.php'; ?>
