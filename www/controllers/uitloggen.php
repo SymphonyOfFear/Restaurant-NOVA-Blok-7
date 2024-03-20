@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$_SESSION['isIngelogd'] = false;
+$_SESSION['isLoggedIn'] = false;
 session_unset();
 
 // Vernietig de sessie

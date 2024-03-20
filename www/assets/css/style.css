@@ -1,15 +1,30 @@
 :root {
-    --primary-color: #006600; /* Kenyan green */
-    --secondary-color: #BB0000; /* Kenyan red */
-    --accent-color: #FFCD00; /* Kenyan gold */
-    --background-color: #FFFFFF; /* White */
-    --navbar-background: #000000; /* Black */
-    --footer-background: #000000; /* Black */
-    --text-color: #333333; /* Dark grey */
-    --link-color: #006600; /* Green */
-    --logo-background: #fcfce4; /* Off-white/beige */
-    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font stack */
-    --border-radius: 4px; /* For rounded corners */
+    --primary-color: #006600;
+    /* Kenyan green */
+    --secondary-color: #BB0000;
+    /* Kenyan red */
+    --accent-color: #FFCD00;
+    /* Kenyan gold */
+    --background-color: #FFFFFF;
+    /* White */
+    --navbar-background: #000000;
+    /* Black */
+    --footer-background: #000000;
+    /* Black */
+    --text-color: #333333;
+    /* Dark grey */
+    --link-color: #006600;
+    /* Green */
+    --logo-background: #F2E8CF;
+    /* Off-white/beige */
+    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Font stack */
+    --border-radius: 4px;
+    /* For rounded corners */
+    --body-font-color: #444;
+    /* Adjusted body text color for better contrast */
+    --section-background-color: rgba(255, 255, 255, 0.8);
+    /* For sections on index page */
 }
 
 * {
@@ -18,15 +33,20 @@
     box-sizing: border-box;
     font-family: var(--font-stack);
 }
-html{
+
+html {
     height: 100%;
 }
 
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    min-height: 100vh;
     margin: 0;
+}
+
+textarea {
+    resize: initial;
 }
 
 a {
@@ -64,10 +84,14 @@ nav li {
 }
 
 nav a {
-    color: white;
+    color: var(--text-color);
     text-decoration: none;
     padding: 0.5em 1em;
     display: block;
+}
+
+.dropdown-content.show {
+    display: block !important;
 }
 
 nav a:hover {
@@ -101,9 +125,11 @@ footer ul {
     display: flex;
     justify-content: center;
 }
+
 .form-group {
     margin-bottom: 1em;
 }
+
 footer ul li {
     margin: 0 10px;
 }
@@ -172,132 +198,204 @@ footer ul li a {
 
 .btn:hover,
 .btn:focus {
-background-color: var(--secondary-color);
-color: var(--background-color);
+    background-color: var(--secondary-color);
+    color: var(--background-color);
 }
 
 /* Banner styles */
 .banner {
+    position: relative;
+    background-color: #f8f9fa !important;
+    /* This is a light gray background, choose a color that fits your design */
     background: url('../images/banner.png') no-repeat center center;
-    background-size: cover; /* This will cover the full area, cropping if necessary */
-    height: 500px; /* You can adjust this value */
-    width: 100%;
+    background-size: cover;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    /* Ensure there is enough contrast for the text to be readable */
+}
+
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 80%;
+    padding: 20px;
+}
+
+.banner-content>section {
+    background: rgba(255, 255, 255, 0.85);
+    /* Adjust transparency as needed */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.banner-content h1,
+.banner-content h2,
+.banner-content p {
+    margin: 0 0 1em;
+    /* Adjust the bottom margin as needed */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    /* Text shadow for better readability */
+}
+
+.banner-content .btn {
+    text-shadow: none;
+    /* Remove text shadow from buttons */
+    /* Additional button styling if needed */
 }
 
 .banner h1 {
-color: white;
-font-size: 2.5em;
+    color: white;
+    font-size: 2.5em;
 }
 
 /* Dropdown styles */
 .dropdown {
-position: relative;
-display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
-display: none;
-position: absolute;
-background-color: #f9f9f9;
-min-width: 160px;
-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-z-index: 1;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 .dropdown-content a {
-color: var(--text-color);
-padding: 12px 16px;
-text-decoration: none;
-display: block;
+    color: var(--text-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
+.welcome-section,
+.menu-section,
+.about-section,
+.reservation-section {
+    margin: 0;
+    padding: 20px;
+    max-width: 300px;
+}
+
+/* Then style each section with headings and paragraphs as needed */
 .dropdown-content a:hover {
-background-color: #ddd;
+    background-color: #ddd;
 }
 
-.dropdown:hover .dropdown-content {
-display: block;
+.dropdown .dropdown-content {
+    display: none;
 }
 
 /* Media queries for responsive layout */
 @media (max-width: 768px) {
-header,
-footer {
-padding: 0.5em;
-}
-nav ul {
-    flex-direction: column;
-}
+    .banner-content {
+        grid-template-columns: 1fr;
+        /* Stack sections on smaller screens */
+        width: 90%;
+        /* Increase width for smaller screens */
+        padding: 10px;
+    }
 
-nav ul li {
-    margin-bottom: 0.5em;
-}
+    header,
+    footer {
+        padding: 0.5em;
+    }
 
-.form-container,
-.dashboard-container,
-.sidebar {
-    padding: 1em;
-    width: 100%;
-}
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin-bottom: 0.5em;
+    }
+
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .form-container,
+    .dashboard-container,
+    .sidebar {
+        padding: 1em;
+        width: 100%;
+    }
 }
 
 /* Product and menu item styles */
 .menu-item {
-border: 1px solid #ddd;
-margin: 1em;
-padding: 1em;
-border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+    margin: 1em;
+    padding: 1em;
+    border-radius: var(--border-radius);
 }
 
 .menu-item img {
-max-width: 100%;
-height: auto;
-border-radius: var(--border-radius);
-margin-bottom: 1em;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin-bottom: 1em;
 }
 
 .menu-item h3 {
-color: var(--secondary-color);
-margin-bottom: 0.5em;
+    color: var(--secondary-color);
+    margin-bottom: 0.5em;
 }
 
 .menu-item p {
-margin-bottom: 1em;
-line-height: 1.4;
+    margin-bottom: 1em;
+    line-height: 1.4;
 }
 
 /* Dashboard styles */
 .dashboard-container {
-display: flex;
-min-height: 100vh;
+    display: flex;
+    max-width: 1200px;
+    margin: auto;
+    /* Centreert de container indien nodig */
 }
 
 .sidebar {
-width: 250px;
-background-color: #003865; /* Dark blue from the Kenyan flag */
-color: white;
-padding: 20px;
+    background-color: #f2f2f2;
+    /* Lichte achtergrond voor de sidebar */
+    padding: 20px;
+    width: 250px;
+    /* Of een breedte naar keuze */
 }
 
 .sidebar ul {
-list-style: none;
-padding: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar ul li a {
-color: white;
-text-decoration: none;
-display: block;
-padding: 10px 0;
+    display: block;
+    padding: 10px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.sidebar ul li a:hover {
-background-color: #c8102e; /* Red from the Kenyan flag */
-padding-left: 10px;
+.sidebar ul li a:hover,
+.sidebar ul li a:focus {
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
 }
 
 .dashboard-main {
-flex-grow: 1;
-padding: 20px;
-background-color: #fff; /* Light background for the main content */
-}    
+    padding: 20px;
+    background-color: var(--background-color);
+    flex-grow: 1;
+}

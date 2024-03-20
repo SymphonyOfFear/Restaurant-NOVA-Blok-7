@@ -1,40 +1,41 @@
 <?php
+// Zorg dat de code voor sessie start bovenaan staat
 session_start();
-// Ensure the user is logged in
+// Redirect als niet ingelogd
 if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn']) {
     header('Location: inloggen.php');
-    exit();
+    exit;
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Keniaanse Restaurant</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Dashboard | Keniaans Restaurant</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
+
 <body>
     <?php include '../partials/header.php'; ?>
 
     <div class="dashboard-container">
         <aside class="sidebar">
             <ul>
-                <li><a href="dashboard.php">Dashboard Home</a></li>
-                <li><a href="manage-menu.php">Manage Menu</a></li>
-                <li><a href="manage-reservations.php">Reservations</a></li>
-                <li><a href="manage-orders.php">Orders</a></li>
-                <!-- Additional links as needed -->
+                <!-- Voeg hier de links toe die relevant zijn voor de gebruiker -->
+                <li><a href="beheer-reserveringen.php">Reserveringen Overzicht</a></li>
+                <!-- Andere links... -->
             </ul>
         </aside>
-
         <main class="dashboard-main">
-            <h1>Welcome to Your Dashboard</h1>
-            <p>Here you can manage menu items, reservations, and more.</p>
-            <!-- Further dashboard content goes here -->
+            <h1>Welkom bij Jouw Dashboard</h1>
+            <p>Hier kun je menu-items, reserveringen en meer beheren.</p>
+            <!-- Content voor de gebruiker -->
         </main>
     </div>
 
     <?php include '../partials/footer.php'; ?>
 </body>
+
 </html>

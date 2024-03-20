@@ -14,3 +14,31 @@ Gebruik deze site om je voortgang bij te houden. Hier vindt je de user stories e
 - Maak logische keuzes in de naamgeving van je bestanden
 - Gebruik validatie-technieken om input van gebruikers te valideren
 
+
+## Planning van de gerechten menugang
+
+ ## Hoofdgerechten Menugang:
+
+- Nyama Choma
+- Ugali
+- Sukuma Wiki
+## Bijgerechten Menugang:
+
+- Chapati
+- Mukimo
+## Snack Menugang:
+
+- Samosas
+- Mandazi
+
+## Speciale Menu Menugang:
+
+- Pilau
+- Nyama Choma
+- Sukuma Wiki
+- Mandazi
+## Vega Menugang:
+
+- Chapati
+- Sukuma Wiki
+- Mukimo

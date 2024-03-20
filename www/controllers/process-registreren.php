@@ -1,46 +1,94 @@
 <?php
-session_start();
-require '../database.php'; // Adjust the path as necessary.
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+require '../database.php'; // This should set up $conn using PDO.
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Capture and sanitize user inputs
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    // Hash the password for security
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    
-    // Address details
-    $street = mysqli_real_escape_string($db, $_POST['street']);
-    $city = mysqli_real_escape_string($db, $_POST['city']);
-    $postcode = mysqli_real_escape_string($db, $_POST['postcode']);
-    $country = mysqli_real_escape_string($db, $_POST['country']);
+    // Check if all required fields are present in $_POST
+    $required_fields = ['voornaam', 'achternaam', 'email', 'wachtwoord', 'bevestig-wachtwoord', 'straatnaam', 'woonplaats', 'huisnummer', 'postcode', 'land'];
 
-    // Insert the new user into the database
-    $query = "INSERT INTO users (email, password) VALUES ('$email', '$password')";
-    if (mysqli_query($db, $query)) {
-        $userId = mysqli_insert_id($db); // Get the newly created user ID
-        
-        // Now insert the address for the new user
-        $addressQuery = "INSERT INTO addresses (user_id, street, city, postcode, country) VALUES ('$userId', '$street', '$city', '$postcode', '$country')";
-        
-        if (mysqli_query($db, $addressQuery)) {
-            // Registration successful
-            $_SESSION['isLoggedIn'] = true;
-            $_SESSION['userId'] = $userId;
-            $_SESSION['userRole'] = 'customer'; // Default role
-
-            header('Location: /dashboard.php');
-            exit;
-        } else {
-            // Handle error for address insertion
-            $_SESSION['registration_error'] = 'Error occurred during address registration';
-            header('Location: /register.php');
+    foreach ($required_fields as $field) {
+        if (!isset($_POST[$field])) {
+            // Handle the case when a required field is missing
+            $_SESSION['registration_error'] = "Required field '$field' is missing.";
+            header('Location: ../views/registreren.php');
             exit;
         }
-    } else {
-        // Handle error for user insertion
-        $_SESSION['registration_error'] = 'Error occurred during user registration';
-        header('Location: /register.php');
+    }
+
+    // Now you can safely access the fields
+    $voornaam = $_POST['voornaam'];
+    $achternaam = $_POST['achternaam'];
+    $email = $_POST['email'];
+    $wachtwoord = $_POST['wachtwoord'];
+    $bevestig_wachtwoord = $_POST['bevestig-wachtwoord'];
+    $rol = 'customer'; // Default role for new registrations
+
+    // Address details
+    $postcode = $_POST['postcode'];
+    $straatnaam = $_POST['straatnaam'];
+    $huisnummer = $_POST['huisnummer'];
+    $woonplaats = $_POST['woonplaats'];
+    $land = $_POST['land'];
+
+    // Check if passwords match
+    if ($wachtwoord !== $bevestig_wachtwoord) {
+        $_SESSION['registration_error'] = "Passwords do not match.";
+        header('Location: ../views/registreren.php');
         exit;
     }
+
+    // Hash the password
+    $hashed_password = password_hash($wachtwoord, PASSWORD_DEFAULT);
+
+    // Start a transaction
+    $conn->beginTransaction();
+
+    try {
+        // Insert the new address into the database
+        $addressStmt = $conn->prepare("INSERT INTO Adres (postcode, straatnaam, huisnummer, woonplaats, land) VALUES (:postcode, :straatnaam, :huisnummer, :woonplaats, :land)");
+        $addressStmt->execute([
+            ':postcode' => $postcode,
+            ':straatnaam' => $straatnaam,
+            ':huisnummer' => $huisnummer,
+            ':woonplaats' => $woonplaats,
+            ':land' => $land
+        ]);
+        $adresId = $conn->lastInsertId(); // Get the newly created address ID
+
+        // Prepare SQL statement for inserting the new user with the address ID
+        $userStmt = $conn->prepare("INSERT INTO Gebruiker (voornaam, achternaam, rol, email, wachtwoord, adres_id) VALUES (:voornaam, :achternaam, :rol, :email, :wachtwoord, :adresId)");
+        $userStmt->execute([
+            ':voornaam' => $voornaam,
+            ':achternaam' => $achternaam,
+            ':rol' => $rol,
+            ':email' => $email,
+            ':wachtwoord' => $hashed_password,
+            ':adresId' => $adresId
+        ]);
+
+        // Commit the transaction
+        $conn->commit();
+
+        // Registration successful
+        $_SESSION['isLoggedIn'] = true;
+        $_SESSION['userId'] = $conn->lastInsertId(); // This should be the user ID
+        $_SESSION['userRole'] = $rol;
+
+
+        header('Location: ../views/index.php');
+        exit;
+    } catch (PDOException $e) {
+        // If an error occurs, rollback the transaction
+        $conn->rollBack();
+        $_SESSION['registration_error'] = 'Error occurred during registration: ' . $e->getMessage();
+        // Redirect to the registration page with an error message
+        header('Location: ../views/registreren.php');
+        exit;
+    }
+} else {
+    // If the request method is not POST, redirect to the registration page
+    header('Location: ../views/registreren.php');
+    exit;
 }
-?>

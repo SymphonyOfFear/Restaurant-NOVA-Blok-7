@@ -7,48 +7,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $wachtwoord = $_POST['wachtwoord'];
 
     // SQL to fetch the user by email.
-    $sql = "SELECT gebruiker_id, voornaam, wachtwoord, rol FROM gebruiker WHERE email = ?";
+    $sql = "SELECT gebruiker_id, voornaam, wachtwoord, rol FROM gebruiker WHERE email = :email";
 
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("s", $email);
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
 
-        if ($stmt->execute()) {
-            $stmt->store_result();
+    if ($stmt->execute()) {
+        if ($stmt->rowCount() == 1) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($stmt->num_rows == 1) {
-                $stmt->bind_result($id, $voornaam, $hashed_wachtwoord, $rol);
+            if (password_verify($wachtwoord, $user['wachtwoord'])) {
+                // Password is correct, set session variables
+                $_SESSION['isLoggedIn'] = true;
+                $_SESSION['userId'] = $user['gebruiker_id'];
+                $_SESSION['userName'] = $user['voornaam'];
+                $_SESSION['userRole'] = $user['rol'];
 
-                if ($stmt->fetch()) {
-                    if (password_verify($wachtwoord, $hashed_wachtwoord)) {
-                        // Password is correct, set session variables
-                        $_SESSION['isLoggedIn'] = true;
-                        $_SESSION['userId'] = $id;
-                        $_SESSION['userName'] = $voornaam;
-                        $_SESSION['userRole'] = $rol;
-
-                        // Redirect based on role
-                        if ($rol === 'employee' || $rol === 'manager' || $rol === 'director') {
-                            header("Location: ../views/admin_dashboard.php"); // Path to the admin dashboard
-                        } else {
-                            header("Location: dashboard.php"); // Path to the standard user dashboard
-                        }
-                        exit();
-                    } else {
-                        // Password is not valid
-                        echo "Het opgegeven wachtwoord is onjuist.";
-                    }
+                // Redirect based on role
+                if ($user['rol'] === 'manager' || $user['rol'] === 'director') {
+                    header("Location: ../views/admin_dashboard.php"); // Path to the admin dashboard
+                } elseif ($user['rol'] === 'employee') {
+                    header("Location: ../views/employee_dashboard.php"); // Path to the standard user dashboard
+                } else {
+                    header("Location: ../views/dashboard.php");
                 }
+                exit;
             } else {
-                // Email not found
-                echo "Er bestaat geen account met dit e-mailadres.";
+                // Password is not valid
+                echo "Het opgegeven wachtwoord is onjuist.";
             }
         } else {
-            echo "Er is een fout opgetreden. Probeer het later opnieuw.";
+            // Email not found
+            echo "Er bestaat geen account met dit e-mailadres.";
         }
-        $stmt->close();
+    } else {
+        echo "Er is een fout opgetreden. Probeer het later opnieuw.";
     }
-    $conn->close();
+    // No need to close the statement or connection when using PDO, as they are closed automatically when they go out of scope.
 } else {
     echo "Formulier is niet correct ingediend.";
 }
-?>
