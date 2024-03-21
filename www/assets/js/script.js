@@ -1,25 +1,41 @@
-// When the document is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Select all dropdown buttons
-    document.querySelectorAll('.dropbtn').forEach(function(dropbtn) {
-        // Add click event listener to each button
-        dropbtn.addEventListener('click', function(event) {
-            event.preventDefault();
-            let dropdownContent = this.nextElementSibling;
-
-            // If the next element is the dropdown content, toggle the 'show' class
-            if (dropdownContent && dropdownContent.classList.contains('dropdown-content')) {
-                dropdownContent.classList.toggle('show');
+document.addEventListener('DOMContentLoaded', function () {
+    // Handle dropdown functionality
+    document.querySelectorAll('.dropbtn').forEach(function (dropbtn) {
+        dropbtn.addEventListener('click', function () {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.previousElementSibling === this) {
+                    openDropdown.style.display = openDropdown.style.display === 'block' ? 'none' : 'block';
+                } else {
+                    openDropdown.style.display = 'none';
+                }
             }
         });
     });
 
-    // Close the dropdown by clicking outside of it
-    window.addEventListener('click', function(event) {
+    // Clicking outside of the dropdown will close any open dropdown contents
+    window.onclick = function (event) {
         if (!event.target.matches('.dropbtn')) {
-            document.querySelectorAll('.dropdown-content.show').forEach(function(dropdown) {
-                dropdown.classList.remove('show');
-            });
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                openDropdown.style.display = 'none';
+            }
         }
-    });
+    };
+
+    // Periodically check the user's role
+    setInterval(function () {
+        fetch('../controllers/RolChecker.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.rol) {
+                    console.log("User Role: ", data.rol);
+                    // Process role-specific actions here if needed
+                }
+            })
+            .catch(error => console.error('Error fetching user role:', error));
+    }, 500); // Check every 0.5 seconds
 });

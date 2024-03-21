@@ -21,12 +21,12 @@ $menugangen = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <main class="container menu-page">
-        <h1>Het Menu</h1>
+
         <div class="menu-items">
             <?php foreach ($menugangen as $menugang) : ?>
                 <div class="menu-item">
                     <!-- Display the image retrieved from the database -->
-                    <img src="data:image/jpeg;base64,<?php echo base64_encode($menugang['product_afbeelding']); ?>" alt="<?php echo $menugang['product_naam']; ?>">
+                    <img src="<?php echo ($menugang['product_afbeelding']); ?>" alt="<?php echo $menugang['product_naam']; ?>">
                     <!-- Product naam -->
                     <h3><?php echo $menugang['product_naam']; ?></h3>
                     <!-- Product beschrijving -->

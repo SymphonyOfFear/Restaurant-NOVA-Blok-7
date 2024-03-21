@@ -1,13 +1,13 @@
 <?php
 session_start();
 require '../database.php'; // Make sure this path is correct.
-
+// Checken op Post
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $wachtwoord = $_POST['wachtwoord'];
 
-    // SQL to fetch the user by email.
-    $sql = "SELECT gebruiker_id, voornaam, wachtwoord, rol FROM gebruiker WHERE email = :email";
+    // SQL Query
+    $sql = "SELECT gebruiker_id, voornaam, wachtwoord, rol FROM Gebruiker WHERE email = :email";
 
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -17,33 +17,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if (password_verify($wachtwoord, $user['wachtwoord'])) {
-                // Password is correct, set session variables
+                // Als wachtwoord correct is zet de variabelen vanuit de database
                 $_SESSION['isLoggedIn'] = true;
                 $_SESSION['userId'] = $user['gebruiker_id'];
                 $_SESSION['userName'] = $user['voornaam'];
                 $_SESSION['userRole'] = $user['rol'];
 
-                // Redirect based on role
+                // Gebruiker met de juiste rol naar de correcte pagina sturen
                 if ($user['rol'] === 'manager' || $user['rol'] === 'director') {
-                    header("Location: ../views/admin_dashboard.php"); // Path to the admin dashboard
+                    header("Location: ../views/admin_dashboard.php");
                 } elseif ($user['rol'] === 'employee') {
-                    header("Location: ../views/employee_dashboard.php"); // Path to the standard user dashboard
+                    header("Location: ../views/employee_dashboard.php");
                 } else {
-                    header("Location: ../views/dashboard.php");
+                    header("Location: ../views/dashboard.php"); // Path to the customer dashboard
                 }
                 exit;
             } else {
-                // Password is not valid
-                echo "Het opgegeven wachtwoord is onjuist.";
+                // Onjuist wachtwoord functie
+                $_SESSION['login_error'] = "Het opgegeven wachtwoord is onjuist.";
+                header("Location: ../views/inloggen.php");
+                exit;
             }
         } else {
-            // Email not found
-            echo "Er bestaat geen account met dit e-mailadres.";
+            // Geen E-mail adres  in de database gevonden
+            $_SESSION['login_error'] = "Er bestaat geen account met dit e-mailadres.";
+            header("Location: ../views/inloggen.php");
+            exit;
         }
     } else {
-        echo "Er is een fout opgetreden. Probeer het later opnieuw.";
+        // SQL Errors
+        $_SESSION['login_error'] = "Er is een fout opgetreden. Probeer het later opnieuw.";
+        header("Location: ../views/inloggen.php");
+        exit;
     }
-    // No need to close the statement or connection when using PDO, as they are closed automatically when they go out of scope.
 } else {
-    echo "Formulier is niet correct ingediend.";
+    // Geen POST request
+    header("Location: ../views/inloggen.php");
+    exit;
 }

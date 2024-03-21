@@ -1,12 +1,13 @@
 <?php
-// Zorg dat de code voor sessie start bovenaan staat
 session_start();
-// Redirect als niet ingelogd
+// Ensure the customer is logged in
 if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn']) {
     header('Location: inloggen.php');
-    exit;
+    exit();
 }
+$userRole = $_SESSION['userRole'] ?? '';
 ?>
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -20,20 +21,18 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn']) {
 <body>
     <?php include '../partials/header.php'; ?>
 
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <ul>
-                <!-- Voeg hier de links toe die relevant zijn voor de gebruiker -->
-                <li><a href="beheer-reserveringen.php">Reserveringen Overzicht</a></li>
-                <!-- Andere links... -->
-            </ul>
-        </aside>
-        <main class="dashboard-main">
-            <h1>Welkom bij Jouw Dashboard</h1>
-            <p>Hier kun je menu-items, reserveringen en meer beheren.</p>
-            <!-- Content voor de gebruiker -->
-        </main>
-    </div>
+    <main class="main-content">
+        <div class="container">
+            <h1 class="text-center">Welkom bij Jouw Klanten Dashboard</h1>
+            <div class="dashboard-actions">
+                <!-- Display actions as buttons or links -->
+                <a href="menu.php" class="btn">Bekijk Menu</a>
+                <a href="reserveren.php" class="btn">Maak Reservering</a>
+                <a href="profiel_bewerken.php" class="btn">Bewerk Profiel</a>
+                <a href="bestelgeschiedenis.php" class="btn">Bestelgeschiedenis</a>
+            </div>
+        </div>
+    </main>
 
     <?php include '../partials/footer.php'; ?>
 </body>

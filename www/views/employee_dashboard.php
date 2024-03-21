@@ -1,11 +1,11 @@
-<?php include 'partials/header.php'; ?>
+<?php include '../partials/header.php'; ?>
 <!DOCTYPE html>
 <html lang="nl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Keniaans Restaurant</title>
+    <title>Medewerker Dashboard | Keniaans Restaurant</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <main class="main-content">
@@ -17,9 +17,9 @@
                 <li><a href="manage-menu.php">Manage Menu</a></li>
                 <li><a href="manage-reservations.php">Reservations</a></li>
                 <li><a href="manage-orders.php">Orders</a></li>
-                <!-- Additional links as needed -->
+
             </ul>
         </aside>
 </main>
 
-<?php include 'partials/footer.php'; ?>
+<?php include '../partials/footer.php'; ?>
