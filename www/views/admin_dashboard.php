@@ -109,7 +109,13 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                                     <td><?php echo htmlspecialchars($row['huisnummer']); ?></td>
                                     <td><?php echo htmlspecialchars($row['woonplaats']); ?></td>
                                     <td><?php echo htmlspecialchars($row['land']); ?></td>
-                                    <td><button class="verwijder-button">Verwijderen</button><button class="wijzig-button">Wijzigen</button></td>
+                                    <td>
+                        <a href="EditGebruiker.php?id=<?php echo $row['gebruiker_id']; ?>" class="wijzig-button">Wijzigen</a>
+                        <form action="../controllers/delete_gebruiker.php" method="POST" onsubmit="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?');">
+        <input type="hidden" name="gebruiker_id" value="<?php echo $row['gebruiker_id']; ?>">
+        <button type="submit" class="verwijder-button">Verwijderen</button>
+    </form>
+                    </td>
                                 </tr>
                             <?php
                             }
@@ -187,7 +193,13 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                                     <td><?php echo htmlspecialchars($row['huisnummer']); ?></td>
                                     <td><?php echo htmlspecialchars($row['woonplaats']); ?></td>
                                     <td><?php echo htmlspecialchars($row['land']); ?></td>
-                                    <td><button class="verwijder-button">Verwijderen</button><button class="wijzig-button">Wijzigen</button></td>
+                                    <td>
+                                    <a href="EditGebruiker.php?id=<?php echo $row['gebruiker_id']; ?>" class="wijzig-button">Wijzigen</a>
+                        <form action="../controllers/delete_gebruiker.php" method="POST" onsubmit="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?');">
+        <input type="hidden" name="gebruiker_id" value="<?php echo $row['gebruiker_id']; ?>">
+        <button type="submit" class="verwijder-button">Verwijderen</button>
+    </form>
+                    </td>
                                 </tr>
                             <?php
                             }
@@ -223,7 +235,13 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                                     <td><?php echo htmlspecialchars($row['huisnummer']); ?></td>
                                     <td><?php echo htmlspecialchars($row['woonplaats']); ?></td>
                                     <td><?php echo htmlspecialchars($row['land']); ?></td>
-                                    <td><button class="verwijder-button">Verwijderen</button><button class="wijzig-button">Wijzigen</button></td>
+                                    <td>
+                                    <a href="EditGebruiker.php?id=<?php echo $row['gebruiker_id']; ?>" class="wijzig-button">Wijzigen</a>
+                        <form action="../controllers/delete_gebruiker.php" method="POST" onsubmit="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?');">
+        <input type="hidden" name="gebruiker_id" value="<?php echo $row['gebruiker_id']; ?>">
+        <button type="submit" class="verwijder-button">Verwijderen</button>
+    </form>
+                    </td>
                                 </tr>
                             <?php } ?>
                         </tbody>

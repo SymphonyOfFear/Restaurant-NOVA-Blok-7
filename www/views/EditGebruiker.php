@@ -1,37 +1,42 @@
 <?php
-// Ensure the session is started
+// Start the session
 session_start();
 
-// Include necessary files...
-require_once('../database.php'); // Adjust the path as needed
+// Include necessary files
+require ('../database.php'); // Make sure the path to your database file is correct
 
 // Check user role and set available roles accordingly
-$availableRoles = ['customer' => 'Klant']; // Default role
-if ($_SESSION['userRole'] == 'manager') {
-    $availableRoles['employee'] = 'Medewerker';
-} elseif ($_SESSION['userRole'] == 'director') {
-    $availableRoles['employee'] = 'Medewerker';
-    $availableRoles['manager'] = 'Manager';
+$availableRoles = ['customer' => 'Klant']; // Default role for simplicity
+if ($_SESSION['userRole'] == 'manager' || $_SESSION['userRole'] == 'director') {
+    $availableRoles += ['employee' => 'Medewerker', 'manager' => 'Manager'];
 }
 
-// Assuming the user's ID is stored in the session, fetch their data
-$userId = $_SESSION['userId'];
-$userData = []; // Initialize the array to hold user data
+// Fetch the user's ID passed as a query parameter for editing
+$userId = isset($_GET['id']) ? $_GET['id'] : null;
 
-// Prepare the SQL query
-$query = "SELECT * FROM Gebruiker WHERE gebruiker_id = :userId";
+if (!$userId) {
+    die('Geen gebruiker ID meegegeven.');
+}
+
+// Prepare and execute the SQL query
+$query = "SELECT Gebruiker.*, Adres.straatnaam, Adres.woonplaats, Adres.huisnummer, Adres.postcode, Adres.land 
+          FROM Gebruiker 
+          INNER JOIN Adres ON Gebruiker.adres_id = Adres.adres_id 
+          WHERE Gebruiker.gebruiker_id = :userId";
+
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
 $stmt->execute();
+
+// Fetch the user data
 $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Check if the user was found
 if (!$userData) {
-    // Handle the case when no user is found
-    // Redirect or display an error message
-    die('Gebruiker niet gevonden');
+    die('Gebruiker niet gevonden.');
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -47,43 +52,68 @@ if (!$userData) {
     <?php include '../partials/header.php'; ?>
     <div class="form-container">
         <h2>Gebruiker Instellingen</h2>
-        <form class="form-container" action="../controllers/process-update-gebruiker.php" method="post">
+        <form class="form-container" action="../controllers/process-edit-gebruiker.php" method="post">
+            <input type="hidden" name="gebruiker_id" value="<?php echo htmlspecialchars($userId); ?>">
+
             <div class="form-group">
                 <label for="voornaam">Voornaam:</label>
                 <input type="text" id="voornaam" name="voornaam" required value="<?php echo htmlspecialchars($userData['voornaam']); ?>">
             </div>
+
             <div class="form-group">
                 <label for="achternaam">Achternaam:</label>
                 <input type="text" id="achternaam" name="achternaam" required value="<?php echo htmlspecialchars($userData['achternaam']); ?>">
             </div>
+
             <div class="form-group">
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($userData['email']); ?>">
             </div>
+
             <div class="form-group">
-                <label for="wachtwoord">E-mail:</label>
-                <input type="password" id="wachtwoord" name="wachtwoord" required value="<?php echo htmlspecialchars($userData['wachtwoord']); ?>">
-            </div>
-            <div class="form-group">
-                <label for="wachtwoord">E-mail:</label>
-                <input type="password" id="wachtwoord" name="wachtwoord" required value="<?php echo htmlspecialchars($userData['wachtwoord']); ?>">
-            </div>
-            <div class="form-group">
-                <label for="wachtwoord">E-mail:</label>
-                <input type="password" id="wachtwoord" name="wachtwoord" required value="<?php echo htmlspecialchars($userData['wachtwoord']); ?>">
+                <label for="nieuw-wachtwoord">Nieuw Wachtwoord (indien wijziging):</label>
+                <input type="password" id="nieuw-wachtwoord" name="nieuw-wachtwoord">
             </div>
 
+            <div class="form-group">
+                <label for="bevestig-nieuw-wachtwoord">Bevestig Nieuw Wachtwoord:</label>
+                <input type="password" id="bevestig-nieuw-wachtwoord" name="bevestig-nieuw-wachtwoord">
+            </div>
 
             <!-- Role selection dropdown -->
             <div class="form-group">
                 <label for="rol">Rol:</label>
                 <select id="rol" name="rol" required>
                     <?php foreach ($availableRoles as $roleValue => $roleName) : ?>
-                        <option value="<?php echo $roleValue; ?>" <?php echo ($userData['rol'] === $roleValue) ? 'selected' : ''; ?>>
+                        <option value="<?php echo $roleValue; ?>" <?php echo ($userData['rol'] == $roleValue) ? 'selected' : ''; ?>>
                             <?php echo $roleName; ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="postcode">Postcode:</label>
+                <input type="text" id="postcode" name="postcode" required value="<?php echo htmlspecialchars($userData['postcode']); ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="straatnaam">Straatnaam:</label>
+                <input type="text" id="straatnaam" name="straatnaam" required value="<?php echo htmlspecialchars($userData['straatnaam']); ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="huisnummer">Huisnummer:</label>
+                <input type="text" id="huisnummer" name="huisnummer" required value="<?php echo htmlspecialchars($userData['huisnummer']); ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="woonplaats">Woonplaats:</label>
+                <input type="text" id="woonplaats" name="woonplaats" required value="<?php echo htmlspecialchars($userData['woonplaats']); ?>">
+            </div>
+
+            <div class="form-group">
+                <label for="land">Land:</label>
+                <input type="text" id="land" name="land" required value="<?php echo htmlspecialchars($userData['land']); ?>">
             </div>
 
             <!-- Submit button -->
