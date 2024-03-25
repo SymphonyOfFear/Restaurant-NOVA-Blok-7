@@ -20,7 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <div class="form-container">
     <h2>Maak een Reservering</h2>
-    <form action="process-reservation.php" method="post">
+    <form action="../controllers/process_reserve.php" method="post">
         <div class="form-group">
             <label for="date">Datum:</label>
             <input type="date" id="date" name="date" required>

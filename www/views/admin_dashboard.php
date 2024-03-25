@@ -20,7 +20,9 @@ $stmtManagers = $conn->prepare($queryManagers);
 $stmtManagers->execute();
 $resultManagers = $stmtManagers->fetchAll(PDO::FETCH_ASSOC);
 
-$queryReserveringen = "SELECT * FROM Reservering";
+$queryReserveringen = "SELECT Reservering.*, Gebruiker.voornaam, Gebruiker.achternaam 
+                        FROM Reservering 
+                        INNER JOIN Gebruiker ON Reservering.gebruiker_id = Gebruiker.gebruiker_id";
 $stmtReserveringen = $conn->prepare($queryReserveringen);
 $stmtReserveringen->execute();
 $resultReserveringen = $stmtReserveringen->fetchAll(PDO::FETCH_ASSOC);
@@ -128,7 +130,7 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                     <h2>Menu Overzicht</h2>
 
                 </div>
-                <div id="reserveringenOverzicht" class="dynamic-content" style="display: none;">
+                <div id="reserveringenOverzicht" class="dynamic-content" style="display: block;">
                     <h2>Reserveringen Overzicht</h2>
                     <table>
                         <thead>
@@ -144,7 +146,7 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                             <?php foreach ($resultReserveringen as $reservering) { ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($reservering['reservering_id']); ?></td>
-                                    <td><?php echo htmlspecialchars($reservering['naam_klant']); ?></td>
+                                    <td><?php echo htmlspecialchars($reservering['voornaam'] . ' ' . $reservering['achternaam']); ?></td>
                                     <td><?php echo htmlspecialchars($reservering['datum']); ?></td>
                                     <td><?php echo htmlspecialchars($reservering['tijd']); ?></td>
                                     <!-- Voeg hier andere relevante kolommen toe -->
@@ -153,7 +155,6 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                         </tbody>
                     </table>
                 </div>
-
 
                 <div id="categorieToevoegen" class="dynamic-content" style="display: none;">
                     <h2>Categorie Toevoegen</h2>
