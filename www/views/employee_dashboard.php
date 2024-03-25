@@ -11,8 +11,18 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
     exit();
 }
 
-// Hier zou je PHP code toevoegen om gegevens op te halen uit de database, zoals menu-items, reserveringen, etc.
+// Query om alle categorieën op te halen
+$queryCategories = "SELECT * FROM Categorie";
+$resultCategories = $conn->query($queryCategories);
+$categories = $resultCategories->fetchAll(PDO::FETCH_ASSOC);
+
+// Query om alle menugangen op te halen
+$queryMenuGangs = "SELECT * FROM Menugang";
+$resultMenuGangs = $conn->query($queryMenuGangs);
+$menuGangs = $resultMenuGangs->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -43,7 +53,7 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                         <a href="#" class="dynamic-content-button" data-content="reserveringToevoegen">Reservering Toevoegen</a>
                     </div>
                 </li>
-                <!-- Voeg hier meer dropdowns toe zoals vereist voor andere functionaliteiten -->
+
             </ul>
         </aside>
 
@@ -109,18 +119,41 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                 <div id="gerechtToevoegen" class="content-section" style="display: none;">
                     <h2>Gerecht Toevoegen</h2>
                     <form class="form-container" action="../controllers/process-nieuw-product.php" method="POST">
-                        <label for="gerechtNaam">Gerecht Naam:</label>
+                        <label for="gerechtNaam">Naam:</label>
                         <input type="text" id="gerechtNaam" name="gerechtNaam" required>
 
-                        <label for="gerechtPrijs">Prijs:</label>
-                        <input type="text" id="gerechtPrijs" name="gerechtPrijs" required>
+                        <label for="gerechtBeschrijving">Beschrijving:</label>
+                        <textarea id="gerechtBeschrijving" name="gerechtBeschrijving" required></textarea>
+
+                        <label for="gerechtInkoopprijs">Inkoopprijs:</label>
+                        <input type="text" id="gerechtInkoopprijs" name="gerechtInkoopprijs" required>
+
+                        <label for="gerechtVerkoopprijs">Verkoopprijs:</label>
+                        <input type="text" id="gerechtVerkoopprijs" name="gerechtVerkoopprijs" required>
+
+                        <label for="gerechtAfbeelding">Afbeelding uploaden:</label>
+                        <input type="file" id="gerechtAfbeelding" name="gerechtAfbeelding" accept="image/*" required>
+
+                        <label for="gerechtIsVega">Is Vega:</label>
+                        <select id="gerechtIsVega" name="gerechtIsVega" required>
+                            <option value="0">Nee</option>
+                            <option value="1">Ja</option>
+                        </select>
 
                         <label for="gerechtCategorie">Categorie:</label>
                         <select id="gerechtCategorie" name="gerechtCategorie" required>
                             <option value="">Kies een categorie...</option>
-                            <option value="voorgerecht">Voorgerecht</option>
-                            <option value="hoofdgerecht">Hoofdgerecht</option>
-                            <option value="nagerecht">Nagerecht</option>
+                            <?php foreach ($categories as $category) : ?>
+                                <option value="<?= $category['categorie_id'] ?>"><?= $category['naam'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <label for="gerechtMenugang">Menugang:</label>
+                        <select id="gerechtMenugang" name="gerechtMenugang" required>
+                            <option value="">Kies een menugang...</option>
+                            <?php foreach ($menuGangs as $menuGang) : ?>
+                                <option value="<?= $menuGang['menugang_id'] ?>"><?= $menuGang['naam'] ?></option>
+                            <?php endforeach; ?>
                         </select>
 
                         <button type="submit">Toevoegen</button>
@@ -129,28 +162,33 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
 
                 <!-- Reservering Toevoegen -->
                 <div id="reserveringToevoegen" class="content-section" style="display: none;">
-                    <h2>Reservering Toevoegen</h2>
-                    <form class="form-container" action="verwerk_reservering_toevoegen.php" method="POST">
-                        <label for="reserveringVoornaam">Voornaam:</label>
-                        <input type="text" id="reserveringVoornaam" name="reserveringVoornaam" required>
-                        <label for="reserveringAchternaam">Achternaam:</label>
-                        <input type="text" id="reserveringAchternaam" name="reserveringAchternaam" required>
-
-                        <label for="reserveringDatumTijd">Datum & Tijd:</label>
-                        <input type="datetime-local" id="reserveringDatumTijd" name="reserveringDatumTijd" required>
-
-                        <label for="reserveringAantalPersonen">Aantal Personen:</label>
-                        <input type="number" id="reserveringAantalPersonen" name="reserveringAantalPersonen" required>
-
-                        <button type="submit">Toevoegen</button>
-                    </form>
+                    <div class="form-container">
+                        <h1>Reservering Toevoegen</h2>
+                            <form action="../controllers/process_reserve.php" method="post">
+                                <div class="form-group">
+                                    <label for="date">Datum:</label>
+                                    <input type="date" id="date" name="date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="time">Tijd:</label>
+                                    <input type="time" id="time" name="time" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="people">Aantal personen:</label>
+                                    <input type="number" id="people" name="people" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="table">Tafelnummer:</label>
+                                    <input type="text" id="table" name="table">
+                                </div>
+                                <button type="submit" class="btn">Reserveer</button>
+                            </form>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
     <?php include '../partials/footer.php'; ?>
 </body>
-
-
 
 </html>

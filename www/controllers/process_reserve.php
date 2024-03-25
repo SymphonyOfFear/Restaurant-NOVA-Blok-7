@@ -40,11 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Stuur de gebruiker terug naar de pagina waar ze vandaan kwamen
-    header("Location: ../views/reserveren.php");
+    header("Location: ../views/employee_dashboard.php");
     exit();
 } else {
     // Als er geen geldig POST-verzoek is ingediend, stuur de gebruiker terug naar de reserveringspagina
-    header("Location: ../views/reserveren.php");
+    header("Location: ../views/employee_dashboard.php");
     exit();
 }
 ?>
