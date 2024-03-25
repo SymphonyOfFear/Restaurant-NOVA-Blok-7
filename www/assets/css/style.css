@@ -18,11 +18,6 @@
     box-sizing: border-box;
     font-family: var(--font-stack);
 }
-html, body {
-    height: 100%; /* Full height */
-    margin: 0; /* Resets any default margin */
-    padding: 0; /* Resets any default padding */
-}
 
 html {
     height: 100%;
@@ -86,11 +81,13 @@ nav a {
     display: block;
 }
 
-.dropdown-content.show {
+.show-dropdown .dropdown-content {
     display: block;
 }
 
-
+.dropdown-content.show {
+    display: block;
+}
 
 nav a:hover {
     background-color: var(--secondary-color);
@@ -104,12 +101,11 @@ main {
 }
 
 footer {
-    position: fixed; /* or 'absolute' if the content is not enough to scroll */
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60px; /* or as needed */
     background-color: var(--footer-background);
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    min-height: 100px;
 }
 
 footer p {
@@ -235,7 +231,7 @@ footer ul li a {
     background-color: #f8f9fa !important;
     background: url('../images/banner.png') no-repeat center center;
     background-size: cover;
-height: 80%;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -332,13 +328,14 @@ height: 80%;
 
 .dropdown-content {
     display: none;
+    /* Hidden by default */
     position: absolute;
     background-color: #f9f9f9;
+    /* White background */
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Ensure it's on top of other elements */
+    z-index: 1;
 }
-
 
 .dropdown-content a {
     color: var(--text-color);
@@ -368,12 +365,13 @@ height: 80%;
 
 @media (max-width: 768px) {
     .banner-content {
-        grid-template-columns: 1fr; /* Single column layout */
-        padding: 10px; /* Less padding */
-        /* More styles as needed for smaller screens */
+        grid-template-columns: 1fr;
+        width: 90%;
+        padding: 10px;
     }
 
-    header, footer {
+    header,
+    footer {
         padding: 0.5em;
     }
 
@@ -381,9 +379,6 @@ height: 80%;
         flex-direction: column;
     }
 
-    nav li {
-        width: 100%; /* Each navigation item takes full width */
-    }
     nav ul li {
         margin-bottom: 0.5em;
     }
@@ -399,14 +394,14 @@ height: 80%;
     }
 
     .dropdown-content {
-        position: static; /* Natural flow within the sidebar */
-        width: 100%; /* Ensures the dropdown stretches to the full width */
+        position: relative;
+        /* Adjust dropdowns for better mobile interaction */
     }
 
     .sidebar {
-        width: 100%; /* Full width */
-        padding: 10px; /* Suitable padding */
-        /* Additional styles as needed */
+        width: 100%;
+        height: auto;
+        padding: 10px;
     }
 }
 

@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inkoopprijs = $_POST["gerechtInkoopprijs"];
     $verkoopprijs = $_POST["gerechtVerkoopprijs"];
     $afbeeldingNaam = ""; // Dit wordt ingesteld nadat de afbeelding is geüpload
-    $is_vega = isset($_POST["isVega"]) ? 1 : 0; // Controleer of het gerecht vegetarisch is
+    $is_vega = isset($_POST["gerechtIsVega"]) ? 1 : 0; // Controleer of het gerecht vegetarisch is
+    $voorraad = $_POST["gerechtVoorraad"]; // Ontvang de voorraad van het gerecht
 
     // Controleer of er een afbeelding is geüpload
     if (isset($_FILES['gerechtAfbeelding']) && $_FILES['gerechtAfbeelding']['error'] === UPLOAD_ERR_OK) {
@@ -61,8 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $categorieId = $stmt->fetchColumn();
 
     // Voeg het nieuwe gerecht toe aan de database
-    $stmt = $pdo->prepare("INSERT INTO Product (naam, beschrijving, inkoopprijs, verkoopprijs, afbeelding, is_vega, categorie_id, menugang_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$naam, $beschrijving, $inkoopprijs, $verkoopprijs, $afbeeldingNaam, $is_vega, $categorieId, $_POST['gerechtMenugang']]);
+    $stmt = $pdo->prepare("INSERT INTO Product (naam, beschrijving, inkoopprijs, verkoopprijs, afbeelding, is_vega, categorie_id, menugang_id, voorraad) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$naam, $beschrijving, $inkoopprijs, $verkoopprijs, $afbeeldingNaam, $is_vega, $categorieId, $_POST['gerechtMenugang'], $voorraad]);
 
     // Stuur de gebruiker terug naar het dashboard
     header('Location: ../views/employee_dashboard.php');
