@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['userRole'] = $rol;
 
 
-        header('Location: ../views/index.php');
+        header('Location: ../index.php');
         exit;
     } catch (PDOException $e) {
         // If an error occurs, rollback the transaction

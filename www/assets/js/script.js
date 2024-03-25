@@ -1,41 +1,37 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Handle dropdown functionality
-    document.querySelectorAll('.dropbtn').forEach(function (dropbtn) {
-        dropbtn.addEventListener('click', function () {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.previousElementSibling === this) {
-                    openDropdown.style.display = openDropdown.style.display === 'block' ? 'none' : 'block';
-                } else {
-                    openDropdown.style.display = 'none';
-                }
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Get all the dropdown buttons
+    const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+
+    // Loop through each button and add event listener
+    dropdownButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const dropdownId = btn.getAttribute('data-dropdown');
+            const dropdownContent = document.getElementById(dropdownId);
+
+            // Toggle the display of the dropdown content
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+            } else {
+                // First, hide all dropdown contents
+                const allDropdownContents = document.querySelectorAll('.dropdown-content');
+                allDropdownContents.forEach(content => content.style.display = 'none');
+
+                // Then, show the selected dropdown content
+                dropdownContent.style.display = 'block';
             }
         });
     });
 
-    // Clicking outside of the dropdown will close any open dropdown contents
-    window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            for (var i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                openDropdown.style.display = 'none';
+    // Optional: Hide dropdowns when clicking outside
+    window.addEventListener('click', function (e) {
+        if (!e.target.matches('.dropdown-btn')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i];
+                if (openDropdown.style.display === 'block') {
+                    openDropdown.style.display = 'none';
+                }
             }
         }
-    };
-
-    // Periodically check the user's role
-    setInterval(function () {
-        fetch('../controllers/RolChecker.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.rol) {
-                    console.log("User Role: ", data.rol);
-                    // Process role-specific actions here if needed
-                }
-            })
-            .catch(error => console.error('Error fetching user role:', error));
-    }, 500); // Check every 0.5 seconds
+    });
 });

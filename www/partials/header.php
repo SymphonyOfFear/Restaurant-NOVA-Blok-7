@@ -4,7 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 ?>
-
 <header>
     <div class="logo">
         <img src="../assets/images/logo.png" alt="Keniaans Restaurant Logo" />
@@ -23,10 +22,10 @@ if (session_status() == PHP_SESSION_NONE) {
                     <li><a href="../views/dashboard.php">Dashboard</a></li>
                 <?php endif; ?>
             <?php endif; ?>
-
-            <li id="navdrop" class="dropdown">
+            <!-- Add data-dropdown attribute to the dropdown-btn -->
+            <li id="navdrop" class="dropdown-btn" data-dropdown="account-dropdown">
                 <a href="javascript:void(0);" class="dropbtn">Account</a>
-                <div class="dropdown-content">
+                <div class="dropdown-content" id="account-dropdown">
                     <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']) : ?>
                         <a href="../views/instellingen.php">Instellingen</a>
                         <a href="../controllers/uitloggen.php">Uitloggen</a>
