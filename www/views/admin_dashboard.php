@@ -47,9 +47,10 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
     <div class="dashboard-wrapper">
         <aside class="sidebar">
             <ul>
-                <li>
-                    <button class="dropdown-btn" data-dropdown="beheer-gebruikers">Beheer Gebruikers</button>
-                    <div id="beheer-gebruikers" class="dropdown-content">
+                <!-- User Management Dropdown -->
+                <li class="dropdown">
+                    <button class="dropdown-btn">Beheer Gebruikers</button>
+                    <div class="dropdown-content">
                         <a href="#" class="dynamic-content-button" data-content="medewerkersOverzicht">Medewerkers Overzicht</a>
                         <a href="#" class="dynamic-content-button" data-content="klantenOverzicht">Klanten Overzicht</a>
                         <?php if ($_SESSION['userRole'] == 'director') : ?>
@@ -57,20 +58,21 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
                         <?php endif; ?>
                     </div>
                 </li>
-                <li>
-                    <button class="dropdown-btn" data-dropdown="beheer-menu">Beheer Menu</button>
-                    <div id="beheer-menu" class="dropdown-content">
+                <!-- Menu Management Dropdown -->
+                <li class="dropdown">
+                    <button class="dropdown-btn">Beheer Menu</button>
+                    <div class="dropdown-content">
                         <a href="#" class="dynamic-content-button" data-content="menuOverzicht">Menu Overzicht</a>
                         <a href="#" class="dynamic-content-button" data-content="categorieToevoegen">Categorie Toevoegen</a>
                     </div>
                 </li>
-                <li>
-                    <button class="dropdown-btn" data-dropdown="beheer-reserveringen">Beheer Reserveringen</button>
-                    <div id="beheer-reserveringen" class="dropdown-content">
+                <!-- Reservation Management Dropdown -->
+                <li class="dropdown">
+                    <button class="dropdown-btn">Beheer Reserveringen</button>
+                    <div class="dropdown-content">
                         <a href="#" class="dynamic-content-button" data-content="reserveringenOverzicht">Reserveringen Overzicht</a>
                     </div>
                 </li>
-
             </ul>
         </aside>
 

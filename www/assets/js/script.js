@@ -1,37 +1,47 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Get all the dropdown buttons
-    const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+document.addEventListener('DOMContentLoaded', function() {
+    var dropdowns = document.querySelectorAll('.dropdown-btn');
+    
+    // Debug: Log the count of dropdown buttons found
+    console.log(dropdowns.length + ' dropdown buttons found.');
 
-    // Loop through each button and add event listener
-    dropdownButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const dropdownId = btn.getAttribute('data-dropdown');
-            const dropdownContent = document.getElementById(dropdownId);
+    dropdowns.forEach(function(dropdown) {
+        dropdown.addEventListener('click', function() {
+            console.log('Dropdown button clicked.');
 
-            // Toggle the display of the dropdown content
-            if (dropdownContent.style.display === 'block') {
-                dropdownContent.style.display = 'none';
+            // Find the dropdown content within the same list item
+            var dropdownContent = this.parentElement.querySelector('.dropdown-content');
+            
+            // Debug: Log if the dropdown content was found
+            if (dropdownContent) {
+                console.log('Dropdown content found.');
+                // Toggle the display of the dropdown content
+                dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
             } else {
-                // First, hide all dropdown contents
-                const allDropdownContents = document.querySelectorAll('.dropdown-content');
-                allDropdownContents.forEach(content => content.style.display = 'none');
-
-                // Then, show the selected dropdown content
-                dropdownContent.style.display = 'block';
+                console.error('Dropdown content not found!');
             }
         });
     });
+    // Handle dynamic content button clicks for the admin dashboard
+    var dynamicContentButtons = document.querySelectorAll('.dynamic-content-button');
+    dynamicContentButtons.forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            var contentId = this.getAttribute('data-content');
+            var contentSections = document.querySelectorAll('.dynamic-content');
 
-    // Optional: Hide dropdowns when clicking outside
-    window.addEventListener('click', function (e) {
-        if (!e.target.matches('.dropdown-btn')) {
-            const dropdowns = document.getElementsByClassName("dropdown-content");
-            for (let i = 0; i < dropdowns.length; i++) {
-                let openDropdown = dropdowns[i];
-                if (openDropdown.style.display === 'block') {
-                    openDropdown.style.display = 'none';
-                }
+            // Hide all content sections
+            contentSections.forEach(function(section) {
+                section.style.display = 'none';
+            });
+
+            // Show the active section based on the clicked button's data-content attribute
+            var activeSection = document.getElementById(contentId);
+            if (activeSection) {
+                activeSection.style.display = 'block';
+            } else {
+                // If the active section isn't found, log an error to the console
+                console.error('Active section content not found!');
             }
-        }
+        });
     });
 });
