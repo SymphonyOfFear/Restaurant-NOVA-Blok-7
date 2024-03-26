@@ -45,11 +45,10 @@ if (isset($_GET['id'])) {
         <h1><?= htmlspecialchars($product['naam']) ?></h1>
         <img src="../assets//images/<?= htmlspecialchars($product['afbeelding']) ?>" alt="<?= htmlspecialchars($product['naam']) ?>" />
         <p><?= nl2br(htmlspecialchars($product['beschrijving'])) ?></p>
-        <p>Prijs: €<?= htmlspecialchars($product['verkoopprijs']) ?></p>
+        <p>€ <?= htmlspecialchars($product['verkoopprijs']) ?></p>
         <p>Categorie: <?= htmlspecialchars($product['categorie_naam']) ?></p>
         <p>Menugang: <?= htmlspecialchars($product['menugang_naam']) ?></p>
-        <p>Voorraad: <?= htmlspecialchars($product['voorraad']) ?></p>
-        <p>Is Vega: <?= $product['is_vega'] ? 'Ja' : 'Nee' ?></p>
+        <p>Vegatarisch: <?= $product['is_vega'] ? 'Ja' : 'Nee' ?></p>
     </div>
 
     <?php include '../partials/footer.php'; ?>

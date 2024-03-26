@@ -82,7 +82,7 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                     <button class="dropdown-btn" data-dropdown="beheer-menu">Menu Beheren</button>
                     <div id="beheer-menu" class="dropdown-content">
                         <a href="#" class="dynamic-content-button" data-content="menuOverzicht">Menu Overzicht</a>
-                        <a href="#" class="dynamic-content-button" data-content="gerechtToevoegen">Gerecht Toevoegen</a>
+                        <a href="#" class="dynamic-content-button" data-content="gerechtToevoegen">Product Toevoegen</a>
                         <a href="#" class="dynamic-content-button" data-content="categorieToevoegen">Categorie Toevoegen</a>
                     </div>
                 </li>
@@ -216,8 +216,8 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Categorie Toevoegen -->
                 <div id="categorieToevoegen" class="content-section" style="display: none;">
-                    <h2>Categorie Toevoegen</h2>
                     <form class="form-container" action="../controllers/process-nieuwe-categorie.php" method="POST">
+                        <h2>Categorie Toevoegen</h2>
                         <label for="categorieNaam">Categorie Naam:</label>
                         <input type="text" id="categorieNaam" name="categorieNaam" required>
                         <button type="submit">Toevoegen</button>
@@ -225,8 +225,9 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <!-- Gerecht Toevoegen -->
                 <div id="gerechtToevoegen" class="content-section" style="display: none;">
-                    <h2>Gerecht Toevoegen</h2>
+
                     <form class="form-container" action="../controllers/process-nieuw-product.php" method="POST" enctype="multipart/form-data">
+                        <h2>Product Toevoegen</h2>
                         <label for="gerechtNaam">Naam:</label>
                         <input type="text" id="gerechtNaam" name="gerechtNaam" required>
 

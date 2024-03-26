@@ -191,7 +191,7 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
 
             </div>
             <div id="reserveringenOverzicht" class="dynamic-content" style="display: none;">
-                <h2>Reserveringen Overzicht</h2>
+
                 <table>
                     <thead>
                         <tr>
