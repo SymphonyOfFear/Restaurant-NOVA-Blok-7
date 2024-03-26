@@ -398,6 +398,16 @@ footer ul li a {
         /* Adjust dropdowns for better mobile interaction */
     }
 
+    .menu-item {
+        margin: 1em 0;
+        /* Adjust margins for smaller screens */
+    }
+
+    .menu-items {
+        grid-template-columns: 1fr;
+        /* Single column layout on small screens */
+    }
+
     .sidebar {
         width: 100%;
         height: auto;
@@ -410,13 +420,60 @@ footer ul li a {
     margin: 1em;
     padding: 1em;
     border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--background-color);
+    /* Optional: added background color */
 }
 
 .menu-item img {
-    max-width: 100%;
-    height: auto;
+    width: 200px;
+    /* adjust the width as needed */
+    height: 200px;
+    /* adjust the height as needed */
+    object-fit: contain;
+    /* this will ensure the whole image fits inside the specified area without stretching, and the aspect ratio is maintained */
     border-radius: var(--border-radius);
     margin-bottom: 1em;
+}
+
+#searchMenu {
+    flex: 1;
+    /* Laat de zoekbalk het beschikbare ruimte innemen */
+    width: auto;
+    /* Laat de breedte automatisch aanpassen */
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+}
+
+#searchMenu:focus {
+    outline: none;
+    /* Optioneel: verwijder de standaard focus-stijl */
+    border-color: var(--primary-color);
+    /* Verander de randkleur wanneer de zoekbalk is geselecteerd */
+}
+
+.search-form {
+    display: flex;
+    /* Gebruik flexbox */
+}
+
+.search-form button[type="submit"] {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--primary-color);
 }
 
 .menu-item h3 {
@@ -427,6 +484,18 @@ footer ul li a {
 .menu-item p {
     margin-bottom: 1em;
     line-height: 1.4;
+}
+
+.menu-item img:hover {
+    transform: scale(1.05);
+    /* Slightly increase size on hover */
+}
+
+.menu-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Adjust minmax for item size */
+    gap: 1em;
 }
 
 .dashboard-container {

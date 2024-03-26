@@ -2,12 +2,11 @@
 require "../database.php"; // Assuming this file contains your database connection
 include '../partials/header.php';
 
-$sql = "SELECT Menugang.naam AS menugang_naam, Product.naam AS product_naam, Product.beschrijving AS product_beschrijving, Product.verkoopprijs AS product_prijs, Product.afbeelding AS product_afbeelding
-        FROM Menugang
-        INNER JOIN Product ON Menugang.menugang_id = Product.menugang_id";
+$sql = "SELECT Product.product_id, Product.naam AS product_naam, Product.afbeelding AS product_afbeelding
+        FROM Product";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
-$menugangen = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -15,24 +14,21 @@ $menugangen = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Keniaans Restaurant</title>
+    <title>Menu | Keniaans Restaurant</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
     <main class="container menu-page">
-
         <div class="menu-items">
-            <?php foreach ($menugangen as $menugang) : ?>
+            <?php foreach ($products as $product) : ?>
                 <div class="menu-item">
-                    <!-- Display the image retrieved from the database -->
-                    <img src="<?php echo ($menugang['product_afbeelding']); ?>" alt="<?php echo $menugang['product_naam']; ?>">
-                    <!-- Product naam -->
-                    <h3><?php echo $menugang['product_naam']; ?></h3>
-                    <!-- Product beschrijving -->
-                    <p><?php echo $menugang['product_beschrijving']; ?></p>
-                    <!-- Product prijs -->
-                    <p>Prijs: €<?php echo $menugang['product_prijs']; ?></p>
+                    <a href="product_detail.php?id=<?php echo $product['product_id']; ?>">
+                        <div class="menu-item-content">
+                            <img src="../assets/images/<?php echo htmlspecialchars($product['product_afbeelding']); ?>" alt="<?php echo htmlspecialchars($product['product_naam']); ?>">
+                            <h3><?php echo htmlspecialchars($product['product_naam']); ?></h3>
+                        </div>
+                    </a>
                 </div>
             <?php endforeach; ?>
         </div>

@@ -5,7 +5,7 @@ session_start();
 // Controleer of het een POST-verzoek is en of de gebruiker_id is ingesteld
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['gebruiker_id'])) {
     $gebruiker_id = $_POST['gebruiker_id'];
-    
+
     // Extra beveiligingscontroles kunnen hier worden toegevoegd (bijv. rolcontrole)
 
     try {
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['gebruiker_id'])) {
     } catch (PDOException $e) {
         $_SESSION['error'] = "Fout bij het verwijderen: " . $e->getMessage();
     }
-    
+
     // Redirect naar het admin-dashboard na de verwijderingsactie
     header("Location: ../views/admin_dashboard.php");
     exit();
@@ -31,4 +31,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['gebruiker_id'])) {
     header("Location: ../views/admin_dashboard.php");
     exit();
 }
-?>

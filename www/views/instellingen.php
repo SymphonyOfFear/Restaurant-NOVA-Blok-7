@@ -46,17 +46,17 @@ if (!$userData) {
 
                 <div class="form-group">
                     <label for="voornaam">Voornaam:</label>
-                    <input type="text" id="voornaam" name="voornaam" required value="<?php echo htmlspecialchars($userData ['voornaam']); ?>">
+                    <input type="text" id="voornaam" name="voornaam" required value="<?php echo htmlspecialchars($userData['voornaam']); ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="achternaam">Achternaam:</label>
-                    <input type="text" id="achternaam" name="achternaam" required value="<?php echo htmlspecialchars($userData ['achternaam']); ?>">
+                    <input type="text" id="achternaam" name="achternaam" required value="<?php echo htmlspecialchars($userData['achternaam']); ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($userData ['email']); ?>">
+                    <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($userData['email']); ?>">
                 </div>
 
                 <div class="form-group">
@@ -102,10 +102,12 @@ if (!$userData) {
             <!-- Voeg een sectie toe voor het verwijderen van het account -->
             <div class="delete-account-section">
                 <h2>Account verwijderen</h2>
-                <p>Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</p>
-                <form action="../controllers/process-delete-account.php" method="post">
-                    <button type="submit" class="delete-account-btn">Account verwijderen</button>
+
+                <form id="delete-account-form" action="../controllers/delete_gebruiker_instellingen.php" method="post">
+                    <input type="hidden" name="gebruiker_id" value="<?php echo $userId; ?>">
+                    <button type="button" onclick="confirmDelete()" class="delete-account-btn">Account verwijderen</button>
                 </form>
+
             </div>
         </div>
     </main>

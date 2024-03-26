@@ -12,7 +12,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <ul>
             <li><a href="../index.php">Home</a></li>
             <li><a href="../views/menu.php">Menu</a></li>
-       
+
             <?php if (isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']) : ?>
                 <?php if ($_SESSION['userRole'] == "manager" || $_SESSION['userRole'] == 'director') : ?>
                     <li><a href="../views/admin_dashboard.php">Admin Dashboard</a></li>

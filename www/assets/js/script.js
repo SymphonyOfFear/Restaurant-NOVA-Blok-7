@@ -1,47 +1,51 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var dropdowns = document.querySelectorAll('.dropdown-btn');
-    
-    // Debug: Log the count of dropdown buttons found
-    console.log(dropdowns.length + ' dropdown buttons found.');
 
-    dropdowns.forEach(function(dropdown) {
-        dropdown.addEventListener('click', function() {
-            console.log('Dropdown button clicked.');
-
-            // Find the dropdown content within the same list item
+    dropdowns.forEach(function (dropdown) {
+        dropdown.addEventListener('click', function () {
             var dropdownContent = this.parentElement.querySelector('.dropdown-content');
-            
-            // Debug: Log if the dropdown content was found
-            if (dropdownContent) {
-                console.log('Dropdown content found.');
-                // Toggle the display of the dropdown content
-                dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+            var isCurrentlyDisplayed = dropdownContent.style.display === "block";
+
+            // Close all dropdowns first
+            document.querySelectorAll('.dropdown-content').forEach(function (content) {
+                content.style.display = 'none';
+            });
+
+            // Toggle the clicked dropdown if it wasn't already open
+            if (!isCurrentlyDisplayed) {
+                dropdownContent.style.display = "block";
             } else {
-                console.error('Dropdown content not found!');
+                dropdownContent.style.display = "none";
             }
         });
     });
-    // Handle dynamic content button clicks for the admin dashboard
+
     var dynamicContentButtons = document.querySelectorAll('.dynamic-content-button');
-    dynamicContentButtons.forEach(function(button) {
-        button.addEventListener('click', function(e) {
+    var currentlyDisplayedContent = null;
+
+    dynamicContentButtons.forEach(function (button) {
+        button.addEventListener('click', function (e) {
             e.preventDefault();
+
+            // Hide the previously displayed dynamic content
+            if (currentlyDisplayedContent) {
+                currentlyDisplayedContent.style.display = 'none';
+            }
+
             var contentId = this.getAttribute('data-content');
-            var contentSections = document.querySelectorAll('.dynamic-content');
-
-            // Hide all content sections
-            contentSections.forEach(function(section) {
-                section.style.display = 'none';
-            });
-
-            // Show the active section based on the clicked button's data-content attribute
-            var activeSection = document.getElementById(contentId);
-            if (activeSection) {
-                activeSection.style.display = 'block';
+            var contentToShow = document.getElementById(contentId);
+            if (contentToShow) {
+                contentToShow.style.display = 'block';
+                // Update the currently displayed content
+                currentlyDisplayedContent = contentToShow;
             } else {
-                // If the active section isn't found, log an error to the console
-                console.error('Active section content not found!');
+                console.error('Content with ID "' + contentId + '" not found.');
             }
         });
     });
 });
+function confirmDelete() {
+    if (confirm('Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
+        document.getElementById('delete-account-form').submit();
+    }
+}

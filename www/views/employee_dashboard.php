@@ -12,6 +12,18 @@ if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['
     exit();
 }
 
+$queryReserveringen = "
+    SELECT R.*, G.voornaam, G.achternaam 
+    FROM Reservering R
+    INNER JOIN Gebruiker G ON R.gebruiker_id = G.gebruiker_id";
+$resultReserveringen = $conn->query($queryReserveringen);
+
+if ($resultReserveringen !== false) {
+    $reserveringen = $resultReserveringen->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $reserveringen = [];
+}
+
 // Query om alle categorieën op te halen
 $queryCategories = "SELECT * FROM Categorie";
 $resultCategories = $conn->query($queryCategories);
@@ -22,14 +34,23 @@ $queryMenuGangs = "SELECT * FROM Menugang";
 $resultMenuGangs = $conn->query($queryMenuGangs);
 $menuGangs = $resultMenuGangs->fetchAll(PDO::FETCH_ASSOC);
 
-// Query om alle menu-items op te halen met de bijbehorende categorie- en menugangnamen
+$searchTerm = '';
+if (isset($_POST['searchTerm'])) {
+    $searchTerm = trim($_POST['searchTerm']);
+}
+
+// Modify your queries to include a WHERE clause that searches for the term
 $queryMenuItems = "
     SELECT P.*, C.naam AS categorie_naam, MG.naam AS menugang_naam
     FROM Product P
     INNER JOIN Categorie C ON P.categorie_id = C.categorie_id
-    INNER JOIN Menugang MG ON P.menugang_id = MG.menugang_id";
-$resultMenuItems = $conn->query($queryMenuItems);
-$menuItems = $resultMenuItems->fetchAll(PDO::FETCH_ASSOC);
+    INNER JOIN Menugang MG ON P.menugang_id = MG.menugang_id
+    WHERE P.naam LIKE :searchTerm OR P.beschrijving LIKE :searchTerm";
+$stmt = $conn->prepare($queryMenuItems);
+$searchWithWildcard = '%' . $searchTerm . '%';
+$stmt->bindParam(':searchTerm', $searchWithWildcard);
+$stmt->execute();
+$menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Query om alle medewerkers op te halen
 $queryMedewerkers = "
@@ -62,6 +83,7 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                     <div id="beheer-menu" class="dropdown-content">
                         <a href="#" class="dynamic-content-button" data-content="menuOverzicht">Menu Overzicht</a>
                         <a href="#" class="dynamic-content-button" data-content="gerechtToevoegen">Gerecht Toevoegen</a>
+                        <a href="#" class="dynamic-content-button" data-content="categorieToevoegen">Categorie Toevoegen</a>
                     </div>
                 </li>
                 <li>
@@ -124,7 +146,11 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
 
                 <div id="menuOverzicht" class="content-section" style="display: none;">
                     <h2>Menu Overzicht</h2>
-                    <input type="text" id="searchMenu" placeholder="Zoeken...">
+                    <form class="search-form" method="POST" action="../controllers/search_results.php">
+                        <input type="text" id="searchMenu" name="searchTerm" placeholder="Zoeken..." value="<?= htmlspecialchars($searchTerm) ?>">
+                        <button type="submit">Zoek</button>
+                    </form>
+
                     <table>
                         <thead>
                             <tr>
@@ -137,24 +163,33 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Categorie</th>
                                 <th>Menugang</th>
                                 <th>Voorraad</th>
+                                <th>Acties</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($menuItems as $menuItem) : ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($menuItem['naam'])                                    ?></td>
+                                    <td><?= htmlspecialchars($menuItem['naam']) ?></td>
                                     <td><?= htmlspecialchars($menuItem['beschrijving']) ?></td>
                                     <td><?= htmlspecialchars($menuItem['inkoopprijs']) ?></td>
                                     <td><?= htmlspecialchars($menuItem['verkoopprijs']) ?></td>
-                                    <td><?= htmlspecialchars($menuItem['afbeelding']) ?></td>
+                                    <td><img src="../assets/images/<?= htmlspecialchars($menuItem['afbeelding']) ?>" alt="Afbeelding" style="width: 100px; height: auto;"></td>
                                     <td><?= ($menuItem['is_vega'] == 1) ? 'Ja' : 'Nee' ?></td>
                                     <td><?= htmlspecialchars($menuItem['categorie_naam']) ?></td>
                                     <td><?= htmlspecialchars($menuItem['menugang_naam']) ?></td>
                                     <td><?= htmlspecialchars($menuItem['voorraad']) ?></td>
+                                    <td>
+                                        <a href="EditProduct.php?id=<?php echo $menuItem['product_id']; ?>" class="wijzig-button">Wijzigen</a>
+                                        <form action="../controllers/delete_product.php" method="POST" onsubmit="return confirm('Weet je zeker dat je dit product wilt verwijderen?');">
+                                            <input type="hidden" name="product_id" value="<?= $menuItem['product_id']; ?>">
+                                            <button type="submit" class="verwijder-button">Verwijderen</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
                 </div>
                 <!-- Reserveringen Overzicht -->
                 <div id="reserveringenOverzicht" class="content-section" style="display: none;">
@@ -170,7 +205,7 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                         <tbody>
                             <?php foreach ($reserveringen as $reservering) : ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($reservering['Naam']) ?></td>
+                                    <td><?= htmlspecialchars($reservering['voornaam'] . ' ' . $reservering['achternaam']) ?></td>
                                     <td><?= htmlspecialchars($reservering['Datum & Tijd']) ?></td>
                                     <td><?= htmlspecialchars($reservering['Aantal Personen']) ?></td>
                                 </tr>
@@ -189,7 +224,7 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                     </form>
                 </div>
                 <!-- Gerecht Toevoegen -->
-                <div id="gerechtToevoegen" class="content-section">
+                <div id="gerechtToevoegen" class="content-section" style="display: none;">
                     <h2>Gerecht Toevoegen</h2>
                     <form class="form-container" action="../controllers/process-nieuw-product.php" method="POST" enctype="multipart/form-data">
                         <label for="gerechtNaam">Naam:</label>
@@ -220,7 +255,6 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                                 <option value="<?= $category['categorie_id'] ?>"><?= $category['naam'] ?></option>
                             <?php endforeach; ?>
                         </select>
-
                         <label for="gerechtMenugang">Menugang:</label>
                         <select id="gerechtMenugang" name="gerechtMenugang" required>
                             <option value="">Kies een menugang...</option>
@@ -228,13 +262,8 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                                 <option value="<?= $menuGang['menugang_id'] ?>"><?= $menuGang['naam'] ?></option>
                             <?php endforeach; ?>
                         </select>
-
-                        <!-- Toegevoegd: Voorraad -->
                         <label for="gerechtVoorraad">Voorraad:</label>
                         <input type="number" id="gerechtVoorraad" name="gerechtVoorraad" required>
-
-                        <input type="number" id="gerechtVoorraad" name="gerechtVoorraad" required>
-
                         <button type="submit">Toevoegen</button>
                     </form>
                 </div>
@@ -271,7 +300,7 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
                         <div class="form-group">
                             <label for="voornaam">Voornaam:</label>
                             <input type="text" id="voornaam" name="voornaam" required>
-                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="achternaam">Achternaam:</label>
                             <input type="text" id="achternaam" name="achternaam" required>
@@ -321,4 +350,3 @@ $medewerkers = $resultMedewerkers->fetchAll(PDO::FETCH_ASSOC);
 </body>
 
 </html>
-

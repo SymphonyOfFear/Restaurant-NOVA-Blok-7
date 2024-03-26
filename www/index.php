@@ -22,16 +22,9 @@
             <p>Keniaanse Restaurant staat bekend om zijn gastvrijheid en authentieke ervaring. Onze chefs komen rechtstreeks uit Kenia om u de meest authentieke smaken te brengen.</p>
         </section>
 
-        <section class="menu-section">
-            <h2>Proef onze Specialiteiten</h2>
-            <!-- Showcase a few menu items here -->
-        </section>
 
-        <section class="reservation-section">
-            <h2>Maak een Reservering</h2>
-            <p>Plan uw bezoek aan ons restaurant en verzeker uzelf van een plekje.</p>
-            <a href="../views/reserveren.php" class="btn">Reserveer Nu</a>
-        </section>
+
+
     </div>
 </div>
 
