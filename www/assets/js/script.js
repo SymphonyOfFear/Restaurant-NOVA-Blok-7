@@ -3,17 +3,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     dropdowns.forEach(function (dropdown) {
         dropdown.addEventListener('click', function () {
+
             var dropdownContent = this.parentElement.querySelector('.dropdown-content');
             var isCurrentlyDisplayed = dropdownContent.style.display === "block";
 
             // Close all dropdowns first
             document.querySelectorAll('.dropdown-content').forEach(function (content) {
                 content.style.display = 'none';
+
             });
 
             // Toggle the clicked dropdown if it wasn't already open
             if (!isCurrentlyDisplayed) {
                 dropdownContent.style.display = "block";
+
             } else {
                 dropdownContent.style.display = "none";
             }
@@ -43,9 +46,49 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-});
-function confirmDelete() {
-    if (confirm('Weet je zeker dat je je account wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
-        document.getElementById('delete-account-form').submit();
+
+    // Confirm delete function
+    var deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            var confirmDeletion = confirm('Weet je zeker dat je dit wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');
+            if (confirmDeletion) {
+                // Assuming the form id or class to be dynamically generated or specific
+                // You might need to adjust the selector accordingly
+                this.closest('form').submit();
+            }
+        });
+    });
+
+    // Search clients functionality
+    var clientSearchInput = document.getElementById('clientSearch');
+    if (clientSearchInput) {
+        clientSearchInput.addEventListener('keyup', function () {
+            searchClients(this.value);
+        });
     }
+});
+
+function searchClients(searchTerm) {
+    if (searchTerm.length < 3) {
+        document.getElementById('clientSearchResults').style.display = 'none';
+        return;
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById('clientSearchResults').innerHTML = this.responseText;
+            document.getElementById('clientSearchResults').style.display = 'block';
+        }
+    };
+
+    xhr.open("GET", "../controllers/search_clients.php?q=" + encodeURIComponent(searchTerm), true);
+    xhr.send();
+}
+
+function selectClient(clientId, clientName) {
+    document.getElementById('selectedClientId').value = clientId;
+    document.getElementById('clientSearch').value = clientName;
+    document.getElementById('clientSearchResults').style.display = 'none';
 }

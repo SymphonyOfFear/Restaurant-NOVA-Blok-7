@@ -11,10 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $datum = $_POST['date'];
     $tijd = $_POST['time'];
     $aantalPersonen = $_POST['people'];
-    $tafelNummer = $_POST['table']; // Als je een tafelnummer hebt in het formulier, haal het op, anders kun je dit aanpassen
-
-    // Haal de gebruiker ID op uit de sessie
-    $gebruikerId = $_SESSION['userId'];
+    $tafelNummer = $_POST['table'];
+    // Nu ook de gebruiker_id ophalen uit het formulier
+    $gebruikerId = $_POST['gebruiker_id']; // Gebruik de waarde van het verborgen veld
 
     try {
         // Bereid de SQL-query voor om een nieuwe reservering toe te voegen
@@ -47,4 +46,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: ../views/employee_dashboard.php");
     exit();
 }
-?>

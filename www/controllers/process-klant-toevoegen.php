@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!isset($_POST[$field])) {
             // Handle the case when a required field is missing
             $_SESSION['registration_error'] = "Required field '$field' is missing.";
-            header('Location: ../views/klant_toevoegen.php');
+            header('Location: ../views/employee_dashboard.php');
             exit;
         }
     }
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if passwords match
     if ($wachtwoord !== $bevestig_wachtwoord) {
         $_SESSION['registration_error'] = "Passwords do not match.";
-        header('Location: ../views/klant_toevoegen.php');
+        header('Location: ../views/employee_dashboard.php');
         exit;
     }
 
@@ -72,19 +72,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->commit();
 
         // Redirect naar een succespagina of een andere actie ondernemen
-        header('Location: klant_toegevoegd_succes.php');
+        header('Location: ../views/employee_dashboard.php');
         exit;
     } catch (PDOException $e) {
         // If an error occurs, rollback the transaction
         $conn->rollBack();
         $_SESSION['registration_error'] = 'Error occurred during registration: ' . $e->getMessage();
         // Redirect to the registration page with an error message
-        header('Location: ../views/klant_toevoegen.php');
+        header('Location: ../views/employee_dashboard.php');
         exit;
     }
 } else {
     // If the request method is not POST, redirect to the registration page
-    header('Location: ../views/klant_toevoegen.php');
+    header('Location: ../views/employee_dashboard.php');
     exit;
 }
-?>

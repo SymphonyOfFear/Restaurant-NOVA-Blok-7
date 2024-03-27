@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } elseif ($user['rol'] === 'employee') {
                     header("Location: ../views/employee_dashboard.php");
                 } else {
-                    header("Location: ../views/dashboard.php"); // Path to the customer dashboard
+                    header("Location: ../index.php");
                 }
                 exit;
             } else {
