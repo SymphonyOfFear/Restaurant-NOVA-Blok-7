@@ -1,6 +1,8 @@
 <?php
 require '../database.php';
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Controleer of het een POST-verzoek is en of de gebruiker_id is ingesteld
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['gebruiker_id'])) {

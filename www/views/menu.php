@@ -25,7 +25,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="menu-item">
                     <a href="product_detail.php?id=<?php echo $product['product_id']; ?>">
                         <div class="menu-item-content">
-                            <img src="../assets/images/<?php echo htmlspecialchars($product['product_afbeelding']); ?>" alt="<?php echo htmlspecialchars($product['product_naam']); ?>">
+                            <img src="../assets/images/<?php echo ($product['product_afbeelding']); ?>" alt="<?php echo htmlspecialchars($product['product_naam']); ?>">
                             <h3><?php echo htmlspecialchars($product['product_naam']); ?></h3>
                         </div>
                     </a>

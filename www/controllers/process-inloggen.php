@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require '../database.php'; // Make sure this path is correct.
 // Checken op Post
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

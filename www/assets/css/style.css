@@ -1,30 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Serif:wght@400;700&display=swap');
-/* OR */
-/* @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap'); */
-/* OR */
-/* @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap'); */
-
-
-
-
 
 :root {
-    --primary-color: #c18f2e; /* A warm golden color to reflect the savannah sunset */
-    --secondary-color: #803515; /* A deeper brown for contrast and earthy feel */
-    --accent-color: #ffba7f; /* A soft, sandy color for highlights */
-    --background-color: #fdf1e0; /* A light cream, like the color of dried savannah grass */
-    --navbar-background: #54392d; /* A dark brown for the navbar to represent the African teak wood */
-    --footer-background: #54392d; /* Same as the navbar for consistency */
-    --text-color: #5a4634; /* A soft brown that's easy on the eyes for better readability */
-    --link-color: #c18f2e; /* Same as primary color for consistency */
-    --logo-background: #fdf1e0; /* A light background for the logo for better visibility */
+    --primary-color: #c18f2e;
+    --secondary-color: #803515;
+    --accent-color: #ffba7f;
+    --background-color: #fdf1e0;
+    --navbar-background: #54392d;
+    --footer-background: #54392d;
+    --text-color: #5a4634;
+    --link-color: #c18f2e;
+    --logo-background: #fdf1e0;
     --font-stack: 'Noto Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --border-radius: 4px;
 }
-
-
-
-
 
 * {
     margin: 0;
@@ -34,28 +22,30 @@
 }
 
 html {
-    height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-    margin: 0; /* Remove default margins */
-    padding: 0; /* Remove default paddings */
+    flex: 1;
+    background-color: #f7e9d7;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Fill at least the entire viewport height */
 
 }
-html, body {
+
+html,
+body {
+    height: auto;
     margin: 0;
     padding: 0;
-    width: 100%; /* ensure the body has no additional space on the sides */
-    max-width: 100%; /* prevents any horizontal scroll caused by padding/margins */
-    overflow-x: hidden; /* hides any overflowing content on the x-axis */
+    display: flex;
+    flex-direction: column;
 }
 
 textarea {
-    resize: horizontal;
-    scale: none;
+    resize: none;
+    size-adjust: auto;
 }
 
 a {
@@ -105,7 +95,6 @@ nav a {
     display: block;
 }
 
-
 .show-dropdown .dropdown-content {
     display: block;
 }
@@ -120,18 +109,22 @@ nav a:hover {
 }
 
 main {
-    flex: 1; /* Allow main content to grow and fill available space */
+    flex: 1;
     padding: 1em;
     text-align: center;
 }
 
+footer ul li {
+    align-items: center;
+    padding: 30px;
+}
+
 footer {
-    background-color: var(--footer-background);
-    color: white;
-    text-align: center;
-    padding: 1em 0;
+
+    height: 80px;
     width: 100%;
-    box-sizing: border-box; /* includes padding in the width */
+    background-color: var(--footer-background);
+
 }
 
 footer p {
@@ -170,9 +163,9 @@ footer ul {
 
 .sidebar .dropdown-content {
     position: static;
-    /* New: Adjusts dropdowns inside sidebar */
+
     box-shadow: none;
-    /* New: Removes shadow for internal dropdowns */
+
 }
 
 .content {
@@ -253,50 +246,66 @@ footer ul li a {
 }
 
 .banner {
-    background-color: #F2E8CF;
+    background: url('../images/banner.png') no-repeat center center / cover;
+
+    min-height: 100vh;
+
+    width: 100%;
+
     position: relative;
-    width: 100vw; /* Ensure it takes the full viewport width */
-    height: 100vh; /* You can set it to the full viewport height or auto */
-    background: url('../images/banner.png') no-repeat center center / cover; /* Cover ensures the background covers the entire area */
     display: flex;
     align-items: center;
     justify-content: center;
     color: #333;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
 }
 
 .banner-content {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center the content */
+    transform: translate(-50%, -50%);
+    overflow: hidden;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    width: 80%; /* Width of the content within the banner */
-    padding: 20px; /* Padding around the content */
+    width: 80%;
+
+    padding: 20px;
+
 }
 
 .banner-content>section {
-    background: rgba(255, 255, 255, 0.85); /* Semi-transparent background for content sections */
+    background: rgba(255, 255, 255, 0.85);
+
     padding: 20px;
-    border-radius: var(--border-radius); /* Use of a CSS variable for border radius */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    border-radius: var(--border-radius);
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 .banner-content h1,
 .banner-content h2,
 .banner-content p {
     margin: 0 0 1em;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Text shadow for better readability */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+
 }
 
 .banner-content .btn {
-    text-shadow: none; /* No text shadow for buttons */
+    text-shadow: none;
+
 }
 
 .banner h1 {
-    color: white; /* White text for the main heading */
-    font-size: 2.5em; /* Large font size for the main heading */
+    color: white;
+
+    font-size: 2.5em;
+
 }
 
 #navdrop {
@@ -312,52 +321,76 @@ footer ul li a {
     width: 100%;
     text-align: left;
 
-    /* New: Adds a separator */
 }
-.sidebar .dropdown-btn{
+
+.sidebar .dropdown-btn {
     border-bottom: 1px solid #eee;
 }
 
-/* Adjust the existing button classes */
 .verwijder-button {
     background-color: var(--secondary-color);
     color: white;
-    padding: 5px 15px;
     border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    width: 100px;
-    /* Set the width for consistency */
-    height: 30px;
-    /* Set the height for consistency */
 }
 
-/* Hover effects */
-.verwijder-button:hover,
-.wijzig-button:hover {
-    opacity: 0.9;
+.wijzig-button:hover,
+.verwijder-button:hover {
+    filter: brightness(85%);
+}
+
+.action-buttons a,
+.action-buttons button {
+    width: auto;
+
+    margin: 5px 0;
+
+}
+
+.action-buttons a,
+.action-buttons form {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin: 0;
+}
+
+.action-buttons form {
+    margin: 0;
+
+    width: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
 }
 
 .action-buttons {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin: 0;
+
 }
 
 .img-size {
-    width: 200px;
-    /* Set the width for consistency */
-    height: 200px;
-    /* Set the height for consistency */
-    object-fit: contain;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
     border-radius: var(--border-radius);
-    margin-bottom: 1em;
 }
 
 .btn-size {
     width: 100px;
-    /* Set the width for consistency */
+
     height: 30px;
-    /* Set the height for consistency */
+
     padding: 5px 15px;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -370,41 +403,31 @@ footer ul li a {
 .wijzig-button {
     background-color: var(--primary-color);
     color: white;
-    padding: 5px 15px;
-    border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
+
 }
 
 .verwijder-button,
 .wijzig-button {
     width: 100px;
-    /* Set the width for consistency */
+
     height: 30px;
-    /* Set the height for consistency */
+
     padding: 5px 15px;
     border-radius: var(--border-radius);
     cursor: pointer;
 }
 
-/* Hover effects */
-.verwijder-button:hover,
-.wijzig-button:hover {
-    opacity: 0.9;
-}
-
 .dropdown-content {
     display: none;
-    /* No change here */
+
     background-color: #f9f9f9;
-    /* Lighter shade for dropdown */
+
     min-width: 160px;
     position: absolute;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1;
 
     border: 1px solid #ddd;
-
 
 }
 
@@ -427,7 +450,7 @@ footer ul li a {
 .dropdown-content a.active {
     background-color: var(--accent-color);
     color: white;
-    
+
 }
 
 .dropdown-btn .dropdown-content {
@@ -435,9 +458,23 @@ footer ul li a {
 }
 
 @media (max-width: 768px) {
+    .container.menu-page {
+        padding: 1rem;
+    }
+
+    .menu-items {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .menu-item img {
+        max-width: 100%;
+        height: auto;
+    }
+
     .sidebar .dropdown-content {
         position: relative;
-        /* Adjusts position for mobile */
+
     }
 
     .banner-content {
@@ -475,20 +512,44 @@ footer ul li a {
 
     .product-detail-container {
         padding: 1rem;
+        margin: 1rem;
     }
 
-    .menu-item {
-        margin: 1em 0;
+    .product-detail-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .product-detail-container .product-image {
+        margin-bottom: 1rem;
     }
 
     .menu-items {
+        margin: 1em 0;
         grid-template-columns: 1fr;
     }
 
     .sidebar {
         width: 100%;
-        /* Full width on small screens */
+
         height: auto;
+    }
+
+    .product-detail-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .product-detail-container img {
+        max-width: 100%;
+
+        height: auto;
+
+    }
+
+    table {
+        display: block;
+
+        overflow-x: auto;
+
     }
 }
 
@@ -504,6 +565,11 @@ footer ul li a {
     background: var(--background-color);
 }
 
+.img-size,
+.menu-item img {
+    width: 200px;
+}
+
 .sidebar a:hover {
     background-color: var(--accent-color);
     color: white;
@@ -511,9 +577,9 @@ footer ul li a {
 
 .menu-item img {
     width: 400px;
-    /* Set the width for consistency */
+
     height: 400px;
-    /* Set the height for consistency */
+
     object-fit: contain;
     border-radius: var(--border-radius);
     margin-bottom: 1em;
@@ -593,7 +659,6 @@ form button[type="submit"]:hover {
 
 }
 
-
 .dashboard-container {
     display: flex;
     flex-direction: column;
@@ -602,13 +667,13 @@ form button[type="submit"]:hover {
 
 .sidebar {
     background-color: var(--background-color);
-    /* Adjusted to match navbar */
+
     width: 250px;
-    /* Adjusted width for consistency */
+
     padding: 20px;
     height: 50vh;
     overflow-y: auto;
-    /* New: allows scrolling for long sidebars */
+
 }
 
 .sidebar ul {
@@ -644,8 +709,15 @@ form button[type="submit"]:hover {
 }
 
 .product-detail-container {
-    text-align: center;
+    max-width: 800px;
+    margin: 2rem auto;
     padding: 2rem;
+    background: #fff;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+
 }
 
 .product-detail-container img {
@@ -653,6 +725,104 @@ form button[type="submit"]:hover {
     height: auto;
     border-radius: var(--border-radius);
     margin-bottom: 1rem;
+}
+
+.input-dropdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+}
+
+#clientSearchResults {
+    display: block;
+
+    background: #fff;
+    justify-content: center;
+    border: 1px solid #ccc;
+
+    border-top: none;
+
+    z-index: 2;
+
+    width: calc(100% - 20px);
+
+    max-height: 200px;
+
+    overflow-y: auto;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+
+}
+
+#clientSearchResults {
+    display: block;
+
+    position: inherit;
+
+    background: #fff;
+
+    border: 1px solid #ccc;
+
+    border-top: none;
+
+    z-index: 2;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    max-height: 200px;
+
+    overflow-y: auto;
+
+    width: 100%;
+
+    top: 100%;
+
+    left: 0;
+
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+
+}
+
+#clientSearchResults.active {
+    display: block;
+
+}
+
+#clientSearchResults p {
+    padding: 0.5em;
+
+    border-bottom: 1px solid #eee;
+
+    cursor: pointer;
+
+}
+
+#clientSearchResults p:last-child {
+    border-bottom: none;
+}
+
+#clientSearchResults p:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+#clientSearchResults.active {
+    display: block;
+
+}
+
+td.action-buttons {
+    min-height: 250px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
 }
 
 .product-detail-container p {
@@ -668,8 +838,10 @@ form button[type="submit"]:hover {
 
 .menu-items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1em;
+
 }
 
 .menu-item {
@@ -696,17 +868,40 @@ form button[type="submit"]:hover {
     margin-bottom: 0.5rem;
 }
 
-.menu-item img {
-    width: 100%;
-    height: auto;
-    border-radius: var(--border-radius);
+.action-buttons a,
+.action-buttons button {
+    width: 125px;
+
+    margin: 5px auto;
+
+    display: block;
+
+    text-align: center;
+
 }
 
-/* Table styles */
+.menu-item img {
+    width: 100%;
+
+    height: auto;
+
+    object-fit: cover;
+
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    text-align: left;
+}
+
+table tr td.action-buttons {
+    padding: 8px;
+}
+
+table tr td:last-child {
+    text-align: center;
+    vertical-align: middle;
 }
 
 table th,
@@ -718,11 +913,36 @@ table td {
 table th {
     background-color: var(--primary-color);
     color: white;
-    text-align: left;
+}
+
+table tbody tr {
+    transition: background-color 0.3s ease;
+
+}
+
+table tbody tr:hover {
+    background-color: var(--accent-color);
+
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
 }
 
 table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+.img-size,
+.menu-item img {
+    width: 150px;
+
+    height: 150px;
+
+    object-fit: cover;
+
+    border-radius: var(--border-radius);
+    margin-bottom: 1em;
 }
 
 .product-detail-container {
@@ -737,14 +957,41 @@ table tbody tr:nth-child(even) {
 .product-detail-container h1 {
     color: var(--primary-color);
     margin-bottom: 1rem;
+    font-size: 2rem;
+
+}
+
+.product-detail-container .product-image {
+
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: #fff;
+    display: block;
+
+    margin: 0 auto 1rem;
+
+}
+
+.product-detail-container .product-description,
+.product-detail-container .product-price,
+.product-detail-container .product-category,
+.product-detail-container .product-menu-course,
+.product-detail-container .product-vega-status {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 .product-detail-container img {
-    max-width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
+
+    border: 1px solid #ddd;
+    padding: 5px;
+
+    background: #fff;
+
 }
 
 .product-detail-container p {
@@ -752,6 +999,7 @@ table tbody tr:nth-child(even) {
     margin-bottom: 0.5rem;
     color: var(--text-color);
     line-height: 1.6;
+
 }
 
 .search-results tbody tr:nth-child(even) {
@@ -777,20 +1025,4 @@ table tbody tr:nth-child(even) {
 
 .search-results {
     margin-top: 1em;
-}
-
-@media (max-width: 768px) {
-    .container.menu-page {
-        padding: 1rem;
-    }
-
-    .menu-items {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-    }
-
-    .menu-item img {
-        max-width: 100%;
-        height: auto;
-    }
 }

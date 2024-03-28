@@ -1,6 +1,10 @@
 <?php
 // Start the session
-session_start();
+if (
+    session_status() == PHP_SESSION_NONE
+) {
+    session_start();
+}
 
 // Include database connection file
 require '../database.php';
@@ -38,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                    Adres.huisnummer = :huisnummer, 
                                    Adres.woonplaats = :woonplaats, 
                                    Adres.land = :land";
-                                   
+
         // Add conditionally updating the password
         if ($nieuw_wachtwoord) {
             $updateGebruikerSql .= ", Gebruiker.wachtwoord = :nieuw_wachtwoord";
@@ -70,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../views/dashboard.php"); // Redirect to the default dashboard
         }
         exit;
-     
     } catch (PDOException $e) {
         // Roll back the transaction if something failed
         $conn->rollBack();
@@ -78,4 +81,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Handle error
     }
 }
-?>

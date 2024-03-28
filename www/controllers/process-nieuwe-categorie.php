@@ -1,6 +1,8 @@
 <?php
 // Start de sessie als deze nog niet is gestart
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Controleer of het een POST-verzoek is en of de categorieNaam is ingestuurd
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["categorieNaam"])) {
@@ -37,4 +39,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["categorieNaam"])) {
     header("Location: ../views/admin_dashboard.php");
     exit();
 }
-?>

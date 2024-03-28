@@ -1,7 +1,7 @@
 <div id="reserveringenOverzicht" class="content-section" style="display:none;">
     <h2>Reserveringen Overzicht</h2>
     <form class="search-form" method="POST" action="../controllers/search_reservations.php">
-        <input type="text" name="searchReserveringen" placeholder="Zoek naar reserveringen..." value="<?= isset($_POST['searchReserveringen']) ? htmlspecialchars($_POST['searchReserveringen']) : '' ?>">
+        <input autocomplete="off" type="text" name="searchReserveringen" placeholder="Zoek naar reserveringen..." value="<?= isset($_POST['searchReserveringen']) ? htmlspecialchars($_POST['searchReserveringen']) : '' ?>">
         <button type="submit">Zoek</button>
     </form>
     <table>
@@ -25,9 +25,9 @@
                         <td><?= htmlspecialchars($reservering['tijd']) ?></td>
                         <td><?= htmlspecialchars($reservering['tafel_nummer']) ?></td>
                         <td class="action-buttons">
-                            <a href="EditReservation.php?id=<?= $reservation['reservering_id']; ?>" class="wijzig-button">Wijzigen</a>
+                            <a href="EditReservation.php?id=<?= $reservering['reservering_id']; ?>" class="wijzig-button">Wijzigen</a>
                             <form action="../controllers/delete_reservation.php" method="POST" onsubmit="return confirm('Weet je zeker dat je deze reservering wilt verwijderen?');">
-                                <input type="hidden" name="reservering_id" value="<?= $reservation['reservering_id']; ?>">
+                                <input type="hidden" name="reservering_id" value="<?= $reservering['reservering_id']; ?>">
                                 <button type="submit" class="verwijder-button">Verwijderen</button>
                             </form>
                         </td>

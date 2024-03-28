@@ -35,11 +35,9 @@ $queryMenuItems = "
     SELECT P.*, C.naam AS categorie_naam, MG.naam AS menugang_naam
     FROM Product P
     INNER JOIN Categorie C ON P.categorie_id = C.categorie_id
-    INNER JOIN Menugang MG ON P.menugang_id = MG.menugang_id
-    WHERE P.naam LIKE :searchTerm OR P.beschrijving LIKE :searchTerm";
+    INNER JOIN Menugang MG ON P.menugang_id = MG.menugang_id";
+
 $stmt = $conn->prepare($queryMenuItems);
-$searchWithWildcard = '%' . $searchTerm . '%';
-$stmt->bindParam(':searchTerm', $searchWithWildcard);
 $stmt->execute();
 $menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $reserveringen = [];
@@ -47,14 +45,6 @@ if ($resultReserveringen !== false) {
     $reserveringen = $resultReserveringen->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$queryMenuItems = "
-    SELECT P.*, C.naam AS categorie_naam, MG.naam AS menugang_naam
-    FROM Product P
-    INNER JOIN Categorie C ON P.categorie_id = C.categorie_id
-    INNER JOIN Menugang MG ON P.menugang_id = MG.menugang_id
-    WHERE P.naam LIKE :searchTerm OR P.beschrijving LIKE :searchTerm";
-$stmt = $conn->prepare($queryMenuItems);
-$menuItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Ensure only managers and directors can access this page
 if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || !($_SESSION['userRole'] == 'manager' || $_SESSION['userRole'] == 'director')) {

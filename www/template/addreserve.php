@@ -5,9 +5,10 @@
           <form action="../controllers/process_reserve.php" method="post">
               <div class="form-group">
                   <label for="clientSearch">Zoek Klant:</label>
-                  <input type="text" id="clientSearch" onkeyup="searchClients(this.value)" placeholder="Search for clients...">
-                  <div id="clientSearchResults" style="display: none;"></div>
+                  <input autocomplete="off" type="text" id="clientSearch" onkeyup="searchClients(this.value)" placeholder="Search for clients...">
+                  <div id="clientSearchResults"></div>
               </div>
+
               <input type="hidden" id="selectedClientId" name="gebruiker_id" value="">
               <div class="form-group">
                   <label for="date">Datum:</label>

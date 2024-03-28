@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
 
     <div class="product-detail-container">
         <h1><?= htmlspecialchars($product['naam']) ?></h1>
-        <img src="../assets//images/<?= htmlspecialchars($product['afbeelding']) ?>" alt="<?= htmlspecialchars($product['naam']) ?>" />
+        <img class="img-size" src="../assets//images/<?= htmlspecialchars($product['afbeelding']) ?>" alt="<?= htmlspecialchars($product['naam']) ?>" />
         <p><?= nl2br(htmlspecialchars($product['beschrijving'])) ?></p>
         <p>€ <?= htmlspecialchars($product['verkoopprijs']) ?></p>
         <p>Categorie: <?= htmlspecialchars($product['categorie_naam']) ?></p>

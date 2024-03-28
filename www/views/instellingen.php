@@ -1,6 +1,7 @@
 <?php
-// Ensure the session is started
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Include necessary files...
 require_once('../database.php'); // Adjust the path as needed

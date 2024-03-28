@@ -7,13 +7,11 @@ document.addEventListener('DOMContentLoaded', function () {
             var dropdownContent = this.parentElement.querySelector('.dropdown-content');
             var isCurrentlyDisplayed = dropdownContent.style.display === "block";
 
-            // Close all dropdowns first
             document.querySelectorAll('.dropdown-content').forEach(function (content) {
                 content.style.display = 'none';
 
             });
 
-            // Toggle the clicked dropdown if it wasn't already open
             if (!isCurrentlyDisplayed) {
                 dropdownContent.style.display = "block";
 
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function (e) {
             e.preventDefault();
 
-            // Hide the previously displayed dynamic content
             if (currentlyDisplayedContent) {
                 currentlyDisplayedContent.style.display = 'none';
             }
@@ -39,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var contentToShow = document.getElementById(contentId);
             if (contentToShow) {
                 contentToShow.style.display = 'block';
-                // Update the currently displayed content
+
                 currentlyDisplayedContent = contentToShow;
             } else {
                 console.error('Content with ID "' + contentId + '" not found.');
@@ -47,21 +44,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Confirm delete function
     var deleteButtons = document.querySelectorAll('.delete-button');
     deleteButtons.forEach(function (button) {
         button.addEventListener('click', function (e) {
             e.preventDefault();
             var confirmDeletion = confirm('Weet je zeker dat je dit wilt verwijderen? Dit kan niet ongedaan worden gemaakt.');
             if (confirmDeletion) {
-                // Assuming the form id or class to be dynamically generated or specific
-                // You might need to adjust the selector accordingly
+
                 this.closest('form').submit();
             }
         });
     });
 
-    // Search clients functionality
     var clientSearchInput = document.getElementById('clientSearch');
     if (clientSearchInput) {
         clientSearchInput.addEventListener('keyup', function () {
@@ -91,4 +85,6 @@ function selectClient(clientId, clientName) {
     document.getElementById('selectedClientId').value = clientId;
     document.getElementById('clientSearch').value = clientName;
     document.getElementById('clientSearchResults').style.display = 'none';
+
+    document.getElementById('name').readOnly = true;
 }

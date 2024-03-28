@@ -1,9 +1,13 @@
 <?php
 // Start the session
-session_start();
+if (
+    session_status() == PHP_SESSION_NONE
+) {
+    session_start();
+}
 
 // Include necessary files
-require ('../database.php'); // Make sure the path to your database file is correct
+require('../database.php'); // Make sure the path to your database file is correct
 
 // Check user role and set available roles accordingly
 $availableRoles = ['customer' => 'Klant']; // Default role for simplicity

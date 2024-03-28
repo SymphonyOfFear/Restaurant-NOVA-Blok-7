@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../database.php'; // Pas het pad aan indien nodig
 $searchTerm = isset($_POST['searchTerm']) ? trim($_POST['searchTerm']) : '';
 if (!empty($searchTerm)) {
@@ -31,7 +33,7 @@ if (!empty($searchTerm)) {
     <main class="dashboard-main">
         <h1>Zoek Producten</h1>
         <form class="search-form" method="POST">
-            <input type="text" name="searchTerm" placeholder="Zoek naar producten..." value="<?php echo htmlspecialchars($searchTerm); ?>">
+            <input autocomplete="off" type="text" name="searchTerm" placeholder="Zoek naar producten..." value="<?php echo htmlspecialchars($searchTerm); ?>">
             <button type="submit">Zoek</button>
         </form>
 
@@ -48,7 +50,8 @@ if (!empty($searchTerm)) {
                                 <th>Categorie</th>
                                 <th>Menugang</th>
                                 <th>Voorraad</th>
-                                <th>Actie</th>
+                                <th>Foto</th>
+                                < <th>Actie</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,6 +63,8 @@ if (!empty($searchTerm)) {
                                     <td><?php echo htmlspecialchars($product['categorie_naam']); ?></td>
                                     <td><?php echo htmlspecialchars($product['menugang_naam']); ?></td>
                                     <td><?php echo htmlspecialchars($product['voorraad']); ?></td>
+                                    <td><img src="../assets/images/<?php echo htmlspecialchars($product['afbeelding']); ?>" alt="<?php echo htmlspecialchars($product['naam']); ?>"></td>
+
                                     <td class="action-buttons">
                                         <a href="EditProduct.php?id=<?php echo $product['product_id']; ?>" class="wijzig-button">Wijzigen</a>
                                         <form action="../controllers/delete_product.php" method="POST" onsubmit="return confirm('Weet je zeker dat je dit product wilt verwijderen?');">

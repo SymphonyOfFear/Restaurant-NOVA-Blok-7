@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once('../database.php'); // Adjust the path as needed
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
