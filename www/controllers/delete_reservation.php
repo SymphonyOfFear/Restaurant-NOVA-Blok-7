@@ -32,10 +32,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Stuur de gebruiker terug naar de pagina waar ze vandaan kwamen
-    header("Location: ../views/employee_dashboard.php");
+    switch ($_SESSION['userRole']) {
+        case 'director':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'manager':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'employee':
+            header('Location: ../views/employee_dashboard.php');
+            break;
+        case 'customer':
+            header('Location: ../views/dashboard.php');
+            break;
+        default:
+            header('Location: ../index.php');
+            break;
+    }
     exit();
 } else {
     // Als er geen geldig POST-verzoek is ingediend, stuur de gebruiker terug naar de reserveringspagina
-    header("Location: ../views/employee_dashboard.php");
+    switch ($_SESSION['userRole']) {
+        case 'director':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'manager':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'employee':
+            header('Location: ../views/employee_dashboard.php');
+            break;
+        case 'customer':
+            header('Location: ../views/dashboard.php');
+            break;
+        default:
+            header('Location: ../index.php');
+            break;
+    }
     exit();
 }

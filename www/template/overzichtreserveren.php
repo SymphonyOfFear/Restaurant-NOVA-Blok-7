@@ -35,7 +35,7 @@
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="4">Geen reserveringen gevonden.</td>
+                    <td colspan="6">Geen reserveringen gevonden.</td>
                 </tr>
             <?php endif; ?>
         </tbody>

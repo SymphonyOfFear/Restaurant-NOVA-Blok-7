@@ -25,11 +25,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['gebruiker_id'])) {
     }
 
     // Redirect naar het admin-dashboard na de verwijderingsactie
-    header("Location: ../views/admin_dashboard.php");
+    switch ($_SESSION['userRole']) {
+        case 'director':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'manager':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'employee':
+            header('Location: ../views/employee_dashboard.php');
+            break;
+        case 'customer':
+            header('Location: ../views/dashboard.php');
+            break;
+        default:
+            header('Location: ../index.php');
+            break;
+    }
     exit();
 } else {
     // Als de gebruiker rechtstreeks toegang probeert te krijgen tot dit bestand zonder POST-gegevens
     $_SESSION['error'] = "Ongeldige aanvraag.";
-    header("Location: ../views/admin_dashboard.php");
+    switch ($_SESSION['userRole']) {
+        case 'director':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'manager':
+            header('Location: ../views/admin_dashboard.php');
+            break;
+        case 'employee':
+            header('Location: ../views/employee_dashboard.php');
+            break;
+        case 'customer':
+            header('Location: ../views/dashboard.php');
+            break;
+        default:
+            header('Location: ../index.php');
+            break;
+    }
+
     exit();
 }
